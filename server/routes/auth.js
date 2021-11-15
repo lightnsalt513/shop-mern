@@ -23,7 +23,7 @@ router.post('/register', async (req, res) => {
 });
 
 // LOGIN
-router.get('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
     if (!user) res.status(401).json('Wrong credentials');
@@ -38,7 +38,7 @@ router.get('/login', async (req, res) => {
         isAdmin: user.isAdmin,
       },
       process.env.JWT_SEC,
-      { expiresIn: "3d" }
+      { expiresIn: "1d" }
     );
     const { password, ...others } = user._doc;
 
