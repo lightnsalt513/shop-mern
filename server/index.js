@@ -8,7 +8,7 @@ const authRoute = require('./routes/auth');
 const productsRoute = require('./routes/product');
 const cartRoute = require('./routes/cart');
 const orderRoute = require('./routes/order');
-const paymentRoute = require('./routes/stripe');
+const paymentRoute = require('./routes/payment');
 
 dotenv.config();
 
