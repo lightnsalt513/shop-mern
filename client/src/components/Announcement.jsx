@@ -1,5 +1,13 @@
 import styled from "styled-components";
 
+const Announcement = () => {
+  return (
+    <Container>
+      Super Deal!!! Free shipping on order above $50 dollars.
+    </Container>
+  );
+};
+
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -10,13 +18,5 @@ const Container = styled.div`
   font-size: 14px;
   font-weight: 500;
 `;
-
-const Announcement = () => {
-  return (
-    <Container>
-      Super Deal!!! Free shipping on order above $50 dollars.
-    </Container>
-  );
-};
 
 export default Announcement;

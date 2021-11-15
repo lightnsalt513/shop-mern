@@ -4,12 +4,6 @@ import axios from "axios";
 import { popularProducts } from "../data";
 import Product from "./Product";
 
-const Container = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  padding: 20px;
-`;
-
 const Products = ({ cat, filters, sort }) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -67,5 +61,11 @@ const Products = ({ cat, filters, sort }) => {
     </Container>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+`;
 
 export default Products;

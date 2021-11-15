@@ -4,6 +4,46 @@ import styled from "styled-components";
 import { sliderItems } from "../data";
 import { mobile } from "../responsive";
 
+const Slider = () => {
+  const [slideIndex, setSlideIndex] = useState(0);
+
+  const handleClick = (direction) => {
+    let newSlideIndex;
+    if (direction === "left") {
+      newSlideIndex = slideIndex > 0 ? slideIndex - 1 : sliderItems.length - 1;
+    } else if (direction === "right") {
+      newSlideIndex =
+        slideIndex === sliderItems.length - 1 ? 0 : slideIndex + 1;
+    }
+    setSlideIndex(newSlideIndex);
+  };
+
+  return (
+    <Container>
+      <Arrow direction="left" onClick={() => handleClick("left")}>
+        <ArrowLeftOutlined />
+      </Arrow>
+      <Wrapper slideIndex={slideIndex}>
+        {sliderItems.map((item) => (
+          <Slide bg={item.bg} key={item.id}>
+            <ImgContainer>
+              <Image src={item.img} />
+            </ImgContainer>
+            <InfoContainer>
+              <Title>{item.title}</Title>
+              <Desc>{item.desc}</Desc>
+              <Button>SHOW NOW</Button>
+            </InfoContainer>
+          </Slide>
+        ))}
+      </Wrapper>
+      <Arrow direction="right" onClick={() => handleClick("right")}>
+        <ArrowRightOutlined />
+      </Arrow>
+    </Container>
+  );
+};
+
 const Container = styled.div`
   position: relative;
   overflow: hidden;
@@ -80,45 +120,5 @@ const Button = styled.button`
   background-color: transparent;
   cursor: pointer;
 `;
-
-const Slider = () => {
-  const [slideIndex, setSlideIndex] = useState(0);
-
-  const handleClick = (direction) => {
-    let newSlideIndex;
-    if (direction === "left") {
-      newSlideIndex = slideIndex > 0 ? slideIndex - 1 : sliderItems.length - 1;
-    } else if (direction === "right") {
-      newSlideIndex =
-        slideIndex === sliderItems.length - 1 ? 0 : slideIndex + 1;
-    }
-    setSlideIndex(newSlideIndex);
-  };
-
-  return (
-    <Container>
-      <Arrow direction="left" onClick={() => handleClick("left")}>
-        <ArrowLeftOutlined />
-      </Arrow>
-      <Wrapper slideIndex={slideIndex}>
-        {sliderItems.map((item) => (
-          <Slide bg={item.bg} key={item.id}>
-            <ImgContainer>
-              <Image src={item.img} />
-            </ImgContainer>
-            <InfoContainer>
-              <Title>{item.title}</Title>
-              <Desc>{item.desc}</Desc>
-              <Button>SHOW NOW</Button>
-            </InfoContainer>
-          </Slide>
-        ))}
-      </Wrapper>
-      <Arrow direction="right" onClick={() => handleClick("right")}>
-        <ArrowRightOutlined />
-      </Arrow>
-    </Container>
-  );
-};
 
 export default Slider;

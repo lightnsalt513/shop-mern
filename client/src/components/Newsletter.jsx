@@ -2,6 +2,21 @@ import { Send } from "@material-ui/icons";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 
+const Newsletter = () => {
+  return (
+    <Container>
+      <Title>Newsletter</Title>
+      <Desc>Get timely updates from your favorite products.</Desc>
+      <InputContainer>
+        <Input placeholder="Your email" />
+        <Button>
+          <Send />
+        </Button>
+      </InputContainer>
+    </Container>
+  );
+};
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -41,20 +56,5 @@ const Button = styled.button`
   color: white;
   cursor: pointer;
 `;
-
-const Newsletter = () => {
-  return (
-    <Container>
-      <Title>Newsletter</Title>
-      <Desc>Get timely updates from your favorite products.</Desc>
-      <InputContainer>
-        <Input placeholder="Your email" />
-        <Button>
-          <Send />
-        </Button>
-      </InputContainer>
-    </Container>
-  );
-};
 
 export default Newsletter;

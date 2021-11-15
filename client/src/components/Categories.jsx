@@ -3,13 +3,6 @@ import { categories } from "../data";
 import { mobile } from "../responsive";
 import CategoryItem from "./CategoryItem";
 
-const Container = styled.div`
-  display: flex;
-  padding: 20px;
-  justify-content: space-between;
-  ${mobile({ flexDirection: "column", padding: "0px" })};
-`;
-
 const Categories = ({ item }) => {
   return (
     <Container>
@@ -19,5 +12,12 @@ const Categories = ({ item }) => {
     </Container>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  padding: 20px;
+  justify-content: space-between;
+  ${mobile({ flexDirection: "column", padding: "0px" })};
+`;
 
 export default Categories;

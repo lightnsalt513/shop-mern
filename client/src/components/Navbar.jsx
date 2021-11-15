@@ -7,6 +7,58 @@ import { useDispatch } from "react-redux";
 import { mobile } from "../responsive";
 import { logout } from "../redux/apiCalls";
 
+const Navbar = () => {
+  const quantity = useSelector((state) => state.cart.quantity);
+  const user = useSelector((state) => state.user.currentUser);
+  const dispatch = useDispatch();
+
+  const onLogoutClick = () => {
+    logout(dispatch);
+  };
+
+  return (
+    <Container>
+      <Wrapper>
+        <Left>
+          <Language>EN</Language>
+          <SearchContainer>
+            <Input placeholder="Search" />
+            <Search style={{ color: "gray", fontSize: 16 }} />
+          </SearchContainer>
+        </Left>
+        <Center>
+          <Link to="/">
+            <Logo>LLLA.</Logo>
+          </Link>
+        </Center>
+        <Right>
+          {user ? (
+            <MenuItem>
+              <LogoutBtn onClick={onLogoutClick}>Log Out</LogoutBtn>
+            </MenuItem>
+          ) : (
+            <>
+              <MenuItem>
+                <Link to="/register">Register</Link>
+              </MenuItem>
+              <MenuItem>
+                <Link to="/login">Sign In</Link>
+              </MenuItem>
+            </>
+          )}
+          <MenuItem>
+            <Link to="/cart">
+              <Badge badgeContent={quantity} color="primary">
+                <ShoppingCartOutlined />
+              </Badge>
+            </Link>
+          </MenuItem>
+        </Right>
+      </Wrapper>
+    </Container>
+  );
+};
+
 const Container = styled.div`
   height: 60px;
   ${mobile({ height: "50px" })};
@@ -77,57 +129,5 @@ const LogoutBtn = styled.button`
   cursor: pointer;
   text-transform: uppercase;
 `;
-
-const Navbar = () => {
-  const quantity = useSelector((state) => state.cart.quantity);
-  const user = useSelector((state) => state.user.currentUser);
-  const dispatch = useDispatch();
-
-  const onLogoutClick = () => {
-    logout(dispatch);
-  };
-
-  return (
-    <Container>
-      <Wrapper>
-        <Left>
-          <Language>EN</Language>
-          <SearchContainer>
-            <Input placeholder="Search" />
-            <Search style={{ color: "gray", fontSize: 16 }} />
-          </SearchContainer>
-        </Left>
-        <Center>
-          <Link to="/">
-            <Logo>LLLA.</Logo>
-          </Link>
-        </Center>
-        <Right>
-          {user ? (
-            <MenuItem>
-              <LogoutBtn onClick={onLogoutClick}>Log Out</LogoutBtn>
-            </MenuItem>
-          ) : (
-            <>
-              <MenuItem>
-                <Link to="/register">Register</Link>
-              </MenuItem>
-              <MenuItem>
-                <Link to="/login">Sign In</Link>
-              </MenuItem>
-            </>
-          )}
-          <MenuItem>
-            <Link to="/cart">
-              <Badge badgeContent={quantity} color="primary">
-                <ShoppingCartOutlined />
-              </Badge>
-            </Link>
-          </MenuItem>
-        </Right>
-      </Wrapper>
-    </Container>
-  );
-};
 
 export default Navbar;

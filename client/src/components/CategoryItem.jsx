@@ -2,6 +2,20 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 
+const CategoryItem = ({ item }) => {
+  return (
+    <Container>
+      <StyledLink to={`/products/${item.cat}`}>
+        <Image src={item.img} />
+        <Info>
+          <Title>{item.title}</Title>
+          <Button>SHOP NOW</Button>
+        </Info>
+      </StyledLink>
+    </Container>
+  );
+};
+
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -47,19 +61,5 @@ const Button = styled.div`
   color: gray;
   cursor: pointer;
 `;
-
-const CategoryItem = ({ item }) => {
-  return (
-    <Container>
-      <StyledLink to={`/products/${item.cat}`}>
-        <Image src={item.img} />
-        <Info>
-          <Title>{item.title}</Title>
-          <Button>SHOP NOW</Button>
-        </Info>
-      </StyledLink>
-    </Container>
-  );
-};
 
 export default CategoryItem;

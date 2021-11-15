@@ -6,6 +6,44 @@ import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const { isFetching, error } = useSelector((state) => state.user);
+
+  const onLoginClick = (e) => {
+    e.preventDefault();
+    login(dispatch, { username, password });
+  };
+
+  return (
+    <Container>
+      <Wrapper>
+        <Title>SIGN IN</Title>
+        <Form>
+          <Input
+            placeholder="username"
+            onChange={(e) => setUsername(e.target.value)}
+            value={username}
+          />
+          <Input
+            placeholder="password"
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+          />
+          <Button onClick={onLoginClick} disabled={isFetching}>
+            LOGIN
+          </Button>
+          {error && <Error>Something went wrong</Error>}
+          <StyledLink to="/register">CREATE A NEW ACCOUNT</StyledLink>
+        </Form>
+      </Wrapper>
+    </Container>
+  );
+};
+
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -69,43 +107,5 @@ const StyledLink = styled(Link)`
   text-decoration: underline;
   cursor: pointer;
 `;
-
-const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
-  const { isFetching, error } = useSelector((state) => state.user);
-
-  const onLoginClick = (e) => {
-    e.preventDefault();
-    login(dispatch, { username, password });
-  };
-
-  return (
-    <Container>
-      <Wrapper>
-        <Title>SIGN IN</Title>
-        <Form>
-          <Input
-            placeholder="username"
-            onChange={(e) => setUsername(e.target.value)}
-            value={username}
-          />
-          <Input
-            placeholder="password"
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-          />
-          <Button onClick={onLoginClick} disabled={isFetching}>
-            LOGIN
-          </Button>
-          {error && <Error>Something went wrong</Error>}
-          <StyledLink to="/register">CREATE A NEW ACCOUNT</StyledLink>
-        </Form>
-      </Wrapper>
-    </Container>
-  );
-};
 
 export default Login;
