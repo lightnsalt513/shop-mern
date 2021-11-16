@@ -1,13 +1,33 @@
-import { Add, Remove } from "@material-ui/icons";
+import { Add, Remove, Delete } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
+import {
+  removeProduct,
+  increaseProduct,
+  decreaseProduct,
+} from "../redux/cartRedux";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+
+  const onMinusClick = (id) => {
+    dispatch(decreaseProduct(id));
+  };
+
+  const onPlusClick = (id) => {
+    dispatch(increaseProduct(id));
+  };
+
+  const onDeleteClick = (id) => {
+    dispatch(removeProduct(id));
+  };
 
   return (
     <Container>
@@ -16,46 +36,48 @@ const Cart = () => {
       <Wrapper>
         <Title>YOUR BAG</Title>
         <Top>
-          <TopButton>CONTINUE SHOPPING</TopButton>
+          <TopButton to="/products">CONTINUE SHOPPING</TopButton>
           <TopTexts>
             <TopText>Shopping Bag(2)</TopText>
             <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
-          <TopButton type="filled">CHECKOUT NOW</TopButton>
+          <TopButton type="filled" to="/">
+            CHECKOUT NOW
+          </TopButton>
         </Top>
         <Bottom>
           <Info>
             {cart.products.map((product) => (
-              <>
-                <Product key={product._id}>
-                  <ProductDetail>
-                    <Image src={product.img} />
-                    <Details>
-                      <ProductName>
-                        <strong>Product:</strong> {product.title}
-                      </ProductName>
-                      <ProductId>
-                        <strong>ID:</strong> {product._id}
-                      </ProductId>
-                      <ProductColor color={product.color} />
-                      <ProductSize>
-                        <strong>Size:</strong> {product.size}
-                      </ProductSize>
-                    </Details>
-                  </ProductDetail>
-                  <PriceDetail>
-                    <ProductAmountContainer>
-                      <Add />
-                      <ProductAmount>{product.quantity}</ProductAmount>
-                      <Remove />
-                    </ProductAmountContainer>
-                    <ProductPrice>
-                      $ {product.quantity * product.price}
-                    </ProductPrice>
-                  </PriceDetail>
-                </Product>
-                <Hr />
-              </>
+              <Product key={product._id}>
+                <ProductDetail>
+                  <Image src={product.img} />
+                  <Details>
+                    <ProductName>
+                      <strong>Product:</strong> {product.title}
+                    </ProductName>
+                    <ProductId>
+                      <strong>ID:</strong> {product._id}
+                    </ProductId>
+                    <ProductColor color={product.color} />
+                    <ProductSize>
+                      <strong>Size:</strong> {product.size}
+                    </ProductSize>
+                  </Details>
+                </ProductDetail>
+                <PriceDetail>
+                  <ProductAmountContainer>
+                    <Remove onClick={() => onMinusClick(product._id)} />
+                    <ProductAmount>{product.quantity}</ProductAmount>
+                    <Add onClick={() => onPlusClick(product._id)} />
+                  </ProductAmountContainer>
+                  <ProductPrice>
+                    $ {product.quantity * product.price}
+                  </ProductPrice>
+                </PriceDetail>
+                <RemoveButton onClick={() => onDeleteClick(product._id)}>
+                  <Delete />
+                </RemoveButton>
+              </Product>
             ))}
           </Info>
           <Summary>
@@ -104,7 +126,7 @@ const Top = styled.div`
   padding: 20px;
 `;
 
-const TopButton = styled.button`
+const TopButton = styled(Link)`
   padding: 10px;
   font-weight: 600;
   cursor: pointer;
@@ -137,6 +159,7 @@ const Info = styled.div`
 const Product = styled.div`
   display: flex;
   justify-content: space-between;
+  border-bottom: 1px solid #eee;
   ${mobile({ flexDirection: "column" })}
 `;
 
@@ -195,12 +218,6 @@ const ProductPrice = styled.div`
   ${mobile({ marginBottom: "20px" })}
 `;
 
-const Hr = styled.hr`
-  background-color: #eee;
-  border: none;
-  height: 1px;
-`;
-
 const Summary = styled.div`
   flex: 1;
   border: 0.5px solid lightgray;
@@ -232,5 +249,7 @@ const Button = styled.button`
   color: white;
   font-weight: 600;
 `;
+
+const RemoveButton = styled.button``;
 
 export default Cart;

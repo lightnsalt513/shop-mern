@@ -27,6 +27,5 @@ const userSlice = createSlice({
   }
 });
 
-console.log(userSlice);
 export const { loginStart, loginSuccess, loginFail, logoutSuccess } = userSlice.actions;
 export default userSlice.reducer;
