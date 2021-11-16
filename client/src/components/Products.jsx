@@ -22,15 +22,18 @@ const Products = ({ cat, filters, sort }) => {
   }, [cat]);
 
   useEffect(() => {
-    cat &&
+    filters &&
       setFilteredProducts(
         products.filter((item) =>
-          Object.entries(filters).every(([key, value]) =>
-            item[key].includes(value)
-          )
+          Object.entries(filters).every(([key, value]) => {
+            const filterMatch = item[key + "s"].find(
+              (obj) => obj.name === value
+            );
+            return filterMatch !== undefined;
+          })
         )
       );
-  }, [products, cat, filters]);
+  }, [products, filters]);
 
   useEffect(() => {
     if (sort === "newest") {
@@ -52,7 +55,7 @@ const Products = ({ cat, filters, sort }) => {
 
   return (
     <Container>
-      {cat
+      {filters
         ? filteredProducts.map((item) => <Product key={item._id} item={item} />)
         : products
             .slice(0, 7)

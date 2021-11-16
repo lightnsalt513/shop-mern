@@ -16,17 +16,22 @@ const Product = () => {
   const productId = location.pathname.split("/").slice(-1)[0];
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
-  const [color, setColor] = useState("");
   const [size, setSize] = useState("");
+  const [sizes, setSizes] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const getProduct = async () => {
       try {
         const res = await publicRequest.get(`/products/${productId}`);
+        const sizeArr = res.data.sizes.map((size) => size.name);
+        const sortedArr = ["S", "M", "L", "XL"].filter((item) =>
+          sizeArr.includes(item)
+        );
+
         setProduct(res.data);
-        setColor(res.data.color[0]);
-        setSize(res.data.size[0]);
+        setSize(res.data.size);
+        setSizes(sortedArr);
       } catch (err) {
         console.log(err);
       }
@@ -42,8 +47,16 @@ const Product = () => {
     }
   };
 
+  const handleSizeChange = (e) => {
+    if (e.target.value === size) return;
+    const newSize = e.target.value;
+    const newId = product.sizes.find((size) => size.name === newSize)._id;
+    setProduct({ ...product, size: newSize, _id: newId });
+    setSize(newSize);
+  };
+
   const handleAddCart = () => {
-    dispatch(addProduct({ ...product, quantity, color, size }));
+    dispatch(addProduct({ ...product, quantity, size }));
   };
 
   return (
@@ -60,15 +73,9 @@ const Product = () => {
           <Price>$ {product.price}</Price>
           <FilterContainer>
             <Filter>
-              <FilterTitle>Color</FilterTitle>
-              {product.color?.map((c) => (
-                <FilterColor key={c} color={c} onClick={() => setColor(c)} />
-              ))}
-            </Filter>
-            <Filter>
               <FilterTitle>Size</FilterTitle>
-              <FilterSize onChange={(e) => setSize(e.target.value)}>
-                {product.size?.map((s) => (
+              <FilterSize onChange={handleSizeChange} value={size}>
+                {sizes.map((s) => (
                   <FilterSizeOption key={s}>{s}</FilterSizeOption>
                 ))}
               </FilterSize>
@@ -144,15 +151,6 @@ const Filter = styled.div`
 const FilterTitle = styled.span`
   font-size: 20px;
   font-weight: 200;
-`;
-
-const FilterColor = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: ${(props) => props.color};
-  margin: 0px 5px;
-  cursor: pointer;
 `;
 
 const FilterSize = styled.select`

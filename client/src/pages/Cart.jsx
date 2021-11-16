@@ -38,7 +38,7 @@ const Cart = () => {
         <Top>
           <TopButton to="/products">CONTINUE SHOPPING</TopButton>
           <TopTexts>
-            <TopText>Shopping Bag(2)</TopText>
+            <TopText>Shopping Bag ({cart.quantity})</TopText>
             <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
           <TopButton type="filled" to="/">
@@ -58,7 +58,6 @@ const Cart = () => {
                     <ProductId>
                       <strong>ID:</strong> {product._id}
                     </ProductId>
-                    <ProductColor color={product.color} />
                     <ProductSize>
                       <strong>Size:</strong> {product.size}
                     </ProductSize>
@@ -182,13 +181,6 @@ const Details = styled.div`
 const ProductName = styled.span``;
 
 const ProductId = styled.span``;
-
-const ProductColor = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: ${(props) => props.color};
-`;
 
 const ProductSize = styled.span``;
 

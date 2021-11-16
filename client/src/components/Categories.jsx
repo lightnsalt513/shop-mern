@@ -3,7 +3,7 @@ import { categories } from "../data";
 import { mobile } from "../styles/responsive";
 import CategoryItem from "./CategoryItem";
 
-const Categories = ({ item }) => {
+const Categories = () => {
   return (
     <Container>
       {categories.map((item) => (
