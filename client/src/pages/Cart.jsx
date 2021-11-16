@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { mobile } from "../responsive";
+import { mobile } from "../styles/responsive";
 import {
   removeProduct,
   increaseProduct,

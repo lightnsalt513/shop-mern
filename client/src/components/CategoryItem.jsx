@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { mobile } from "../responsive";
+import { mobile } from "../styles/responsive";
 
 const CategoryItem = ({ item }) => {
   return (

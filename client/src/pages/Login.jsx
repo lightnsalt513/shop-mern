@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { login } from "../redux/apiCalls";
-import { mobile } from "../responsive";
+import { mobile } from "../styles/responsive";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 

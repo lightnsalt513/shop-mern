@@ -1,89 +1,56 @@
-import { useState } from "react";
-import { ArrowLeftOutlined, ArrowRightOutlined } from "@material-ui/icons";
 import styled from "styled-components";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { sliderItems } from "../data";
-import { mobile } from "../responsive";
+import { mobile } from "../styles/responsive";
+import "../styles/slick-custom.scss";
 
-const Slider = () => {
-  const [slideIndex, setSlideIndex] = useState(0);
-
-  const handleClick = (direction) => {
-    let newSlideIndex;
-    if (direction === "left") {
-      newSlideIndex = slideIndex > 0 ? slideIndex - 1 : sliderItems.length - 1;
-    } else if (direction === "right") {
-      newSlideIndex =
-        slideIndex === sliderItems.length - 1 ? 0 : slideIndex + 1;
-    }
-    setSlideIndex(newSlideIndex);
+const Carousel = () => {
+  const carouselSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
   };
 
   return (
     <Container>
-      <Arrow direction="left" onClick={() => handleClick("left")}>
-        <ArrowLeftOutlined />
-      </Arrow>
-      <Wrapper slideIndex={slideIndex}>
+      <Slider {...carouselSettings}>
         {sliderItems.map((item) => (
-          <Slide bg={item.bg} key={item.id}>
-            <ImgContainer>
-              <Image src={item.img} />
-            </ImgContainer>
-            <InfoContainer>
-              <Title>{item.title}</Title>
-              <Desc>{item.desc}</Desc>
-              <Button>SHOW NOW</Button>
-            </InfoContainer>
+          <Slide key={item.id}>
+            <SlideInner bg={item.bg}>
+              <ImgContainer>
+                <Image src={item.img} />
+              </ImgContainer>
+              <InfoContainer>
+                <Title>{item.title}</Title>
+                <Desc>{item.desc}</Desc>
+                <Button>SHOW NOW</Button>
+              </InfoContainer>
+            </SlideInner>
           </Slide>
         ))}
-      </Wrapper>
-      <Arrow direction="right" onClick={() => handleClick("right")}>
-        <ArrowRightOutlined />
-      </Arrow>
+      </Slider>
     </Container>
   );
 };
 
 const Container = styled.div`
-  position: relative;
   overflow: hidden;
-  width: 100%;
-  height: 100vh;
-  ${mobile({ display: "none" })};
-`;
-
-const Arrow = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  z-index: 1;
-  ${(props) => props.direction}: 10px;
-  width: 50px;
-  height: 50px;
-  margin: auto;
-  background-color: #fff7f7;
-  border: none;
-  border-radius: 50%;
-  opacity: 0.5;
-  cursor: pointer;
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-  height: 100%;
-  transition: transform 0.5s ease;
-  transform: translateX(${(props) => props.slideIndex * -100}vw);
 `;
 
 const Slide = styled.div`
+  vertical-align: top;
+`;
+
+const SlideInner = styled.div`
   display: flex;
+  position: relative;
   align-items: center;
-  height: 100vh;
-  width: 100vw;
   flex-shrink: 0;
+  height: 500px;
   background-color: #${(props) => props.bg};
 `;
 
@@ -91,15 +58,29 @@ const ImgContainer = styled.div`
   display: flex;
   align-items: center;
   flex: 1;
+  overflow: hidden;
+  min-width: 300px;
   height: 100%;
+  ${mobile({
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  })}
 `;
 
 const Image = styled.img`
   width: 100%;
+  ${mobile({
+    height: "100%",
+    objectFit: "cover",
+  })}
 `;
 
 const InfoContainer = styled.div`
   flex: 1;
+  position: relative;
   padding: 50px;
 `;
 
@@ -121,4 +102,4 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-export default Slider;
+export default Carousel;

@@ -4,7 +4,7 @@ import { Search, ShoppingCartOutlined } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { mobile } from "../responsive";
+import { mobile } from "../styles/responsive";
 import { logout } from "../redux/apiCalls";
 
 const Navbar = () => {
@@ -20,7 +20,6 @@ const Navbar = () => {
     <Container>
       <Wrapper>
         <Left>
-          <Language>EN</Language>
           <SearchContainer>
             <Input placeholder="Search" />
             <Search style={{ color: "gray", fontSize: 16 }} />
@@ -78,16 +77,9 @@ const Left = styled.div`
   flex: 1;
 `;
 
-const Language = styled.span`
-  font-size: 14px;
-  cursor: pointer;
-  ${mobile({ display: "none" })};
-`;
-
 const SearchContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 25px;
   padding: 5px;
   border: 1px solid lightgray;
 `;
