@@ -1,24 +1,16 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import Product from "./Product";
+import { getProducts } from "../redux/apiCalls";
 
 const Products = ({ cat, filters, sort }) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const res = await axios.get(
-          cat
-            ? `http://localhost:5000/api/products?category=${cat}`
-            : "http://localhost:5000/api/products"
-        );
-        setProducts(res.data);
-      } catch (err) {}
-    };
-    getProducts();
+    getProducts(cat)
+      .then((data) => setProducts(data))
+      .catch((err) => console.log(err));
   }, [cat]);
 
   useEffect(() => {

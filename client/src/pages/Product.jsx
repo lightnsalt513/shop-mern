@@ -7,9 +7,9 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import { mobile } from "../styles/responsive";
-import { publicRequest } from "../requestMethods";
 import { addProduct } from "../redux/cartRedux";
 import { useDispatch } from "react-redux";
+import { getProduct } from "../redux/apiCalls";
 
 const Product = () => {
   const location = useLocation();
@@ -21,22 +21,18 @@ const Product = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const getProduct = async () => {
-      try {
-        const res = await publicRequest.get(`/products/${productId}`);
-        const sizeArr = res.data.sizes.map((size) => size.name);
+    getProduct(productId)
+      .then((data) => {
+        const sizeArr = data.sizes.map((size) => size.name);
         const sortedArr = ["S", "M", "L", "XL"].filter((item) =>
           sizeArr.includes(item)
         );
 
-        setProduct(res.data);
-        setSize(res.data.size);
+        setProduct(data);
+        setSize(data.size);
         setSizes(sortedArr);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getProduct();
+      })
+      .catch((err) => console.log(err));
   }, [productId]);
 
   const handleQuantity = (type) => {
