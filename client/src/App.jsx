@@ -11,9 +11,19 @@ import {
   Redirect,
 } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getCart } from "./redux/apiCalls";
 
 const App = () => {
   const user = useSelector((state) => state.user.currentUser);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (user) {
+      getCart(dispatch);
+    }
+  }, [user]);
 
   return (
     <Router>

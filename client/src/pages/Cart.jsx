@@ -1,32 +1,39 @@
 import { Add, Remove, Delete } from "@material-ui/icons";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "../styles/responsive";
-import {
-  removeProduct,
-  increaseProduct,
-  decreaseProduct,
-} from "../redux/cartRedux";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getCart, removeFromCart, updateQuantityCart } from "../redux/apiCalls";
+import { useEffect } from "react";
 
 const Cart = () => {
+  const user = useSelector((state) => state.user.currentUser);
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
-  const onMinusClick = (id) => {
-    dispatch(decreaseProduct(id));
+  useEffect(() => {
+    if (user) {
+      getCart(dispatch);
+    }
+  }, [user]);
+
+  const onMinusClick = (product) => {
+    if (product.quantity !== 1) {
+      const quantity = product.quantity - 1;
+      updateQuantityCart(dispatch, cart, { ...product, quantity });
+    }
   };
 
-  const onPlusClick = (id) => {
-    dispatch(increaseProduct(id));
+  const onPlusClick = (product) => {
+    const quantity = product.quantity + 1;
+    updateQuantityCart(dispatch, cart, { ...product, quantity });
   };
 
   const onDeleteClick = (id) => {
-    dispatch(removeProduct(id));
+    removeFromCart(dispatch, cart, id);
   };
 
   return (
@@ -65,9 +72,9 @@ const Cart = () => {
                 </ProductDetail>
                 <PriceDetail>
                   <ProductAmountContainer>
-                    <Remove onClick={() => onMinusClick(product._id)} />
+                    <Remove onClick={() => onMinusClick(product)} />
                     <ProductAmount>{product.quantity}</ProductAmount>
-                    <Add onClick={() => onPlusClick(product._id)} />
+                    <Add onClick={() => onPlusClick(product)} />
                   </ProductAmountContainer>
                   <ProductPrice>
                     $ {product.quantity * product.price}

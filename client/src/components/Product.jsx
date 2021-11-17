@@ -3,16 +3,23 @@ import {
   SearchOutlined,
   ShoppingCartOutlined,
 } from "@material-ui/icons";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { addProduct } from "../redux/cartRedux";
+import { addToCart } from "../redux/apiCalls";
 
 const Product = ({ item }) => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.currentUser);
+  const cart = useSelector((state) => state.cart);
 
   const handleAddCart = () => {
-    dispatch(addProduct({ ...item, quantity: 1 }));
+    if (user) {
+      addToCart(dispatch, cart, { ...item, quantity: 1 });
+    } else {
+      window.alert("Please login to add to cart");
+    }
   };
 
   return (

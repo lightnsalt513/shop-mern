@@ -7,9 +7,8 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import { mobile } from "../styles/responsive";
-import { addProduct } from "../redux/cartRedux";
-import { useDispatch } from "react-redux";
-import { getProduct } from "../redux/apiCalls";
+import { useDispatch, useSelector } from "react-redux";
+import { getProduct, addToCart } from "../redux/apiCalls";
 
 const Product = () => {
   const location = useLocation();
@@ -18,6 +17,8 @@ const Product = () => {
   const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState("");
   const [sizes, setSizes] = useState([]);
+  const user = useSelector((state) => state.user.currentUser);
+  const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -52,7 +53,11 @@ const Product = () => {
   };
 
   const handleAddCart = () => {
-    dispatch(addProduct({ ...product, quantity, size }));
+    if (user) {
+      addToCart(dispatch, cart, { ...product, quantity });
+    } else {
+      window.alert("Please login to add to cart");
+    }
   };
 
   return (
