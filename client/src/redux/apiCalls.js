@@ -49,8 +49,16 @@ export const getProduct = (id) => {
 export const getCart = async (dispatch) => { 
   try {
     const res = await userRequest.get(`/cart`);
+    if (!res.data) return;
     const results = await Promise.all(res.data.products.map(product => {
-      return getProduct(product.productId);
+      return getProduct(product.mainProductId)
+        .then(data => {
+          if (product.productId === product.mainProductId) {
+            return data;
+          }
+          const size = data.sizes.find(size => size._id === product.productId).name;
+          return { ...data, _id: product.productId, size };
+        });
     }));
     const products = results.map((result, i) => {
       return { ...result, quantity: res.data.products[i].quantity }
@@ -64,8 +72,9 @@ export const getCart = async (dispatch) => {
 
 export const addToCart = async (dispatch, cart, product) => { 
   let productObj = {
-    productId: product._id,
+    productId: product.selectedId || product._id,
     quantity: product.quantity,
+    mainProductId: product._id
   };
   let products = [];
 
@@ -82,14 +91,15 @@ export const addToCart = async (dispatch, cart, product) => {
       let confirmed = true;
 
       products = cart.products.map(item => {
-        if (item._id === product._id) {
+        if (item._id === productObj.productId) {
           confirmed = window.confirm('This product is already in the cart. Replace the product?');
           hasSameProduct = true;
-          return { productId: item._id, quantity: product.quantity }
+          return { productId: productObj.selectedId, quantity: productObj.quantity, mainProductId: productObj.mainProductId }
         } else {
-          return { productId: item._id, quantity: item.quantity }
+          return { productId: (item.selectedId || item._id), quantity: item.quantity, mainProductId: item._id }
         }
       });
+      
       if (!confirmed) return;
 
       if (hasSameProduct) {

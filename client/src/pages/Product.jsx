@@ -45,7 +45,7 @@ const Product = () => {
     if (e.target.value === size) return;
     const newSize = e.target.value;
     const newId = product.sizes.find((size) => size.name === newSize)._id;
-    setProduct({ ...product, size: newSize, _id: newId });
+    setProduct({ ...product, size: newSize, selectedId: newId });
     setSize(newSize);
   };
 
