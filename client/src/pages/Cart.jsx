@@ -1,8 +1,5 @@
 import { Add, Remove, Delete } from "@material-ui/icons";
 import styled from "styled-components";
-import Announcement from "../components/Announcement";
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
 import { mobile } from "../styles/responsive";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -38,8 +35,6 @@ const Cart = () => {
 
   return (
     <Container>
-      <Navbar />
-      <Announcement />
       <Wrapper>
         <Title>YOUR BAG</Title>
         <Top>
@@ -108,7 +103,6 @@ const Cart = () => {
           </Summary>
         </Bottom>
       </Wrapper>
-      <Footer />
     </Container>
   );
 };

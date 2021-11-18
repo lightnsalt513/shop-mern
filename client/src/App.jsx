@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCart } from "./redux/apiCalls";
+import MainWithGnbFooter from "./layout/MainWithGnbFooter";
 
 const App = () => {
   const user = useSelector((state) => state.user.currentUser);
@@ -29,16 +30,24 @@ const App = () => {
     <Router>
       <Switch>
         <Route exact path="/">
-          <Home />
+          <MainWithGnbFooter>
+            <Home />
+          </MainWithGnbFooter>
         </Route>
         <Route path={["/products", "/products/:category"]}>
-          <ProductList />
+          <MainWithGnbFooter>
+            <ProductList />
+          </MainWithGnbFooter>
         </Route>
         <Route path="/product/:id">
-          <Product />
+          <MainWithGnbFooter>
+            <Product />
+          </MainWithGnbFooter>
         </Route>
         <Route path="/cart">
-          <Cart />
+          <MainWithGnbFooter>
+            <Cart />
+          </MainWithGnbFooter>
         </Route>
         <Route path="/login">{user ? <Redirect to="/" /> : <Login />}</Route>
         <Route path="/register">
