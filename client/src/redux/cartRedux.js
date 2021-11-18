@@ -26,7 +26,7 @@ const cartSlice = createSlice({
     updateProduct: (state, action) => {
       let idx;
       const sameProduct = state.products.find((product, i) => {
-        if (product._id === action.payload._id) {
+        if (product.selectedId === action.payload.selectedId) {
           idx = i;
           return true;
         }
@@ -40,7 +40,7 @@ const cartSlice = createSlice({
       }
     },
     updateQuantity: (state, action) => {
-      const productIdx = state.products.findIndex(product => product._id === action.payload._id);
+      const productIdx = state.products.findIndex(product => product.selectedId === action.payload.selectedId);
       const prevPrice = state.products[productIdx].quantity * state.products[productIdx].price;
       state.products[productIdx].quantity = action.payload.quantity;
       state.total = state.total - prevPrice + (action.payload.quantity * action.payload.price);
@@ -48,7 +48,7 @@ const cartSlice = createSlice({
     removeProduct: (state, action) => {
       let productPrice;
       const idx = state.products.findIndex((product) => {
-        if (product._id === action.payload) {
+        if (product.selectedId === action.payload) {
           productPrice = product.quantity * product.price;
           return true;
         }

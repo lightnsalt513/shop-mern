@@ -26,7 +26,7 @@ const Product = () => {
           sizeArr.includes(item)
         );
 
-        setProduct(data);
+        setProduct({ ...data, selectedId: data._id });
         setSize(data.size);
         setSizes(sortedArr);
       })

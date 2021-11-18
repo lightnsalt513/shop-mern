@@ -30,7 +30,7 @@ const Cart = () => {
   };
 
   const onDeleteClick = (id) => {
-    removeFromCart(dispatch, cart, id);
+    removeFromCart(dispatch, id);
   };
 
   return (
@@ -50,7 +50,7 @@ const Cart = () => {
         <Bottom>
           <Info>
             {cart.products.map((product) => (
-              <Product key={product._id}>
+              <Product key={product.selectedId}>
                 <ProductDetail>
                   <Image src={product.img} />
                   <Details>
@@ -58,7 +58,7 @@ const Cart = () => {
                       <strong>Product:</strong> {product.title}
                     </ProductName>
                     <ProductId>
-                      <strong>ID:</strong> {product._id}
+                      <strong>ID:</strong> {product.selectedId}
                     </ProductId>
                     <ProductSize>
                       <strong>Size:</strong> {product.size}
@@ -75,7 +75,7 @@ const Cart = () => {
                     $ {product.quantity * product.price}
                   </ProductPrice>
                 </PriceDetail>
-                <RemoveButton onClick={() => onDeleteClick(product._id)}>
+                <RemoveButton onClick={() => onDeleteClick(product.selectedId)}>
                   <Delete />
                 </RemoveButton>
               </Product>

@@ -50,18 +50,14 @@ export const getCart = async (dispatch) => {
   try {
     const res = await userRequest.get(`/cart`);
     if (!res.data) return;
-    const results = await Promise.all(res.data.products.map(product => {
+
+    const fetchedProducts = await Promise.all(res.data.products.map(product => {
       return getProduct(product.mainProductId)
-        .then(data => {
-          if (product.productId === product.mainProductId) {
-            return data;
-          }
-          const size = data.sizes.find(size => size._id === product.productId).name;
-          return { ...data, _id: product.productId, size };
-        });
     }));
-    const products = results.map((result, i) => {
-      return { ...result, quantity: res.data.products[i].quantity }
+    const products = fetchedProducts.map((result, i) => {
+      const cartProduct = res.data.products[i];
+      const size = result.sizes.find(size => size._id === cartProduct.productId);
+      return { ...result, quantity: cartProduct.quantity, size: size.name, selectedId: cartProduct.productId }
     });
 
     dispatch(getCartSuccess(products));
@@ -76,6 +72,7 @@ export const addToCart = async (dispatch, cart, product) => {
     quantity: product.quantity,
     mainProductId: product._id
   };
+  product.selectedId = product.selectedId || product._id;
   let products = [];
 
   try {
@@ -91,12 +88,21 @@ export const addToCart = async (dispatch, cart, product) => {
       let confirmed = true;
 
       products = cart.products.map(item => {
-        if (item._id === productObj.productId) {
-          confirmed = window.confirm('This product is already in the cart. Replace the product?');
+        if (item.selectedId === productObj.productId) {
+          if (hasSameProduct) throw Error({ message: 'Same product exists in cart' });
           hasSameProduct = true;
-          return { productId: productObj.selectedId, quantity: productObj.quantity, mainProductId: productObj.mainProductId }
+          confirmed = window.confirm('This product is already in the cart. Replace the product?');
+          return { 
+            productId: productObj.productId, 
+            quantity: productObj.quantity, 
+            mainProductId: productObj.mainProductId
+          }
         } else {
-          return { productId: (item.selectedId || item._id), quantity: item.quantity, mainProductId: item._id }
+          return { 
+            productId: (item.selectedId || item._id), 
+            quantity: item.quantity, 
+            mainProductId: item._id
+          }
         }
       });
       
@@ -121,8 +127,8 @@ export const addToCart = async (dispatch, cart, product) => {
 export const updateQuantityCart = async (dispatch, cart, product) => {
   const products = cart.products.map(item => {
     let quantity = item.quantity;
-    if (item._id === product._id) quantity = product.quantity;
-    return { productId: item._id, quantity };
+    if (item.selectedId === product.selectedId) quantity = product.quantity;
+    return { productId: item.selectedId, quantity, mainProductId: item._id };
   });
   
   try {
@@ -133,7 +139,7 @@ export const updateQuantityCart = async (dispatch, cart, product) => {
   }
 }
 
-export const removeFromCart = async (dispatch, cart, productId) => { 
+export const removeFromCart = async (dispatch, productId) => { 
   try {
     await userRequest.put(`/cart/remove/${productId}`)
     dispatch(removeProduct(productId));

@@ -16,7 +16,7 @@ const Product = ({ item }) => {
 
   const handleAddCart = () => {
     if (user) {
-      addToCart(dispatch, cart, { ...item, quantity: 1 });
+      addToCart(dispatch, cart, { ...item, quantity: 1, selectedId: item._id });
     } else {
       window.alert("Please login to add to cart");
     }
