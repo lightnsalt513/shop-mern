@@ -1,18 +1,92 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { mobile } from "../styles/responsive";
+import { register } from "../redux/apiCalls";
+import { useHistory } from "react-router";
+
+const messages = {
+  success: "Register was successful. Please continue with login.",
+  password: "Confirm password does not match.",
+  duplicateEmail: "Email already exists.",
+  duplicateUsername: "Username already exists.",
+};
 
 const Register = () => {
+  const [registerInfo, setRegisterInfo] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const history = useHistory();
+
+  const handleChange = (e) => {
+    setRegisterInfo((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (registerInfo.password === confirmPassword) {
+      try {
+        await register(registerInfo);
+        alert(messages.success);
+        history.push("/login");
+      } catch (err) {
+        switch (err) {
+          case "email":
+            setErrorMessage(messages.duplicateEmail);
+            break;
+          case "username":
+            setErrorMessage(messages.duplicateUsername);
+            break;
+          default:
+            console.log(err);
+        }
+      }
+    } else {
+      setErrorMessage(messages.password);
+    }
+  };
+
   return (
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
-        <Form>
-          <Input placeholder="name" />
-          <Input placeholder="last name" />
-          <Input placeholder="username" />
-          <Input placeholder="email" />
-          <Input placeholder="password" />
-          <Input placeholder="confirm password" />
+        <Form onSubmit={handleSubmit}>
+          <Input
+            onChange={handleChange}
+            value={registerInfo.username}
+            name="username"
+            placeholder="username"
+          />
+          <Input
+            onChange={handleChange}
+            value={registerInfo.email}
+            name="email"
+            placeholder="email"
+          />
+          <Input
+            onChange={handleChange}
+            type="password"
+            value={registerInfo.password}
+            name="password"
+            placeholder="password"
+          />
+          <Input
+            onChange={handleConfirmPasswordChange}
+            type="password"
+            value={confirmPassword}
+            name="confirmPassword"
+            placeholder="confirm password"
+          />
+          {errorMessage && <Error>{errorMessage}</Error>}
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
@@ -75,6 +149,12 @@ const Button = styled.button`
   background-color: teal;
   color: white;
   cursor: pointer;
+`;
+
+const Error = styled.div`
+  margin-top: 20px;
+  color: red;
+  font-size: 12px;
 `;
 
 export default Register;

@@ -2,6 +2,18 @@ import { loginFail, loginStart, loginSuccess, logoutSuccess } from "./userRedux"
 import { addProduct, updateProduct, clearProducts, getCartSuccess, updateQuantity, removeProduct } from './cartRedux';
 import { publicRequest, userRequest } from '../requestMethods';
 
+// Create User
+export const register = async (user) => {
+  try {
+    const res = await publicRequest.post('/auth/register', user);
+    return res;
+  } catch (err) {
+    for (let key in err.response.data) {
+      throw key;
+    }
+  }
+}
+
 // Login
 export const login = async (dispatch, user) => {
   dispatch(loginStart());

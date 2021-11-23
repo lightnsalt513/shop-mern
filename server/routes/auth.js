@@ -13,11 +13,15 @@ router.post('/register', async (req, res) => {
   });
 
   try {
-    // saves to db
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
   } catch (err) {
-    res.status(500).json(err);
+    // if unique key is duplicate
+    if (err.code === 11000) {
+      res.status(500).json(err.keyPattern);
+    } else {
+      res.status(500).json(err);
+    }
   }
   
 });
@@ -38,7 +42,7 @@ router.post('/login', async (req, res) => {
         isAdmin: user.isAdmin,
       },
       process.env.JWT_SEC,
-      { expiresIn: "1d" }
+      { expiresIn: "7d" }
     );
     const { password, ...others } = user._doc;
 
