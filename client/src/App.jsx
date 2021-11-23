@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCart } from "./redux/apiCalls";
 import MainWithGnbFooter from "./layout/MainWithGnbFooter";
+import ScrollToTop from "./helpers/ScrollToTop";
 
 const App = () => {
   const user = useSelector((state) => state.user.currentUser);
@@ -28,6 +29,7 @@ const App = () => {
 
   return (
     <Router>
+      <ScrollToTop />
       <Switch>
         <Route exact path="/">
           <MainWithGnbFooter>
