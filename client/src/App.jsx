@@ -1,21 +1,22 @@
-import Home from "./pages/Home";
-import ProductList from "./pages/ProductList";
-import Product from "./pages/Product";
-import Register from "./pages/Register";
-import Login from "./pages/Login";
-import Cart from "./pages/Cart";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   BrowserRouter as Router,
   Route,
   Switch,
   Redirect,
 } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+
 import { getCart } from "./redux/apiCalls";
-import MainWithGnbFooter from "./layout/MainWithGnbFooter";
 import ScrollToTop from "./helpers/ScrollToTop";
+
+import MainWithGnbFooter from "./layout/MainWithGnbFooter";
+import Home from "./pages/Home";
+import ProductList from "./pages/ProductList";
+import Product from "./pages/Product";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import Cart from "./pages/Cart";
 
 const App = () => {
   const user = useSelector((state) => state.user.currentUser);

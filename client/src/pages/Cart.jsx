@@ -1,14 +1,16 @@
-import { Add, Remove, Delete } from "@material-ui/icons";
-import styled from "styled-components";
-import { mobile } from "../styles/responsive";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
+import { Add, Remove, Delete } from "@material-ui/icons";
+import { mobile } from "../styles/responsive";
+import Modal from "../components/Modal";
 import { getCart, removeFromCart, updateQuantityCart } from "../redux/apiCalls";
-import { useEffect } from "react";
 
 const Cart = () => {
   const user = useSelector((state) => state.user.currentUser);
   const cart = useSelector((state) => state.cart);
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -33,77 +35,85 @@ const Cart = () => {
     removeFromCart(dispatch, id);
   };
 
+  const onCheckoutClick = () => {
+    setOpen(true);
+  };
+
   return (
-    <Container>
-      <Wrapper>
-        <Title>YOUR BAG</Title>
-        <Top>
-          <TopButton to="/products">CONTINUE SHOPPING</TopButton>
-          <TopTexts>
-            <TopText>Shopping Bag ({cart.quantity})</TopText>
-            <TopText>Your Wishlist (0)</TopText>
-          </TopTexts>
-          <TopButton type="filled" to="/">
-            CHECKOUT NOW
-          </TopButton>
-        </Top>
-        <Bottom>
-          <Info>
-            {cart.products.map((product) => (
-              <Product key={product.selectedId}>
-                <ProductDetail>
-                  <Image src={product.img} />
-                  <Details>
-                    <ProductName>
-                      <strong>Product:</strong> {product.title}
-                    </ProductName>
-                    <ProductId>
-                      <strong>ID:</strong> {product.selectedId}
-                    </ProductId>
-                    <ProductSize>
-                      <strong>Size:</strong> {product.size}
-                    </ProductSize>
-                  </Details>
-                </ProductDetail>
-                <PriceDetail>
-                  <ProductAmountContainer>
-                    <Remove onClick={() => onMinusClick(product)} />
-                    <ProductAmount>{product.quantity}</ProductAmount>
-                    <Add onClick={() => onPlusClick(product)} />
-                  </ProductAmountContainer>
-                  <ProductPrice>
-                    $ {product.quantity * product.price}
-                  </ProductPrice>
-                </PriceDetail>
-                <RemoveButton onClick={() => onDeleteClick(product.selectedId)}>
-                  <Delete />
-                </RemoveButton>
-              </Product>
-            ))}
-          </Info>
-          <Summary>
-            <SummaryTitle>ORDER SUMMARY</SummaryTitle>
-            <SummaryItem>
-              <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
-            </SummaryItem>
-            <SummaryItem>
-              <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>$ 5.90</SummaryItemPrice>
-            </SummaryItem>
-            <SummaryItem>
-              <SummaryItemText>Shipping Discount</SummaryItemText>
-              <SummaryItemPrice>$ -5.90</SummaryItemPrice>
-            </SummaryItem>
-            <SummaryItem type="total">
-              <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
-            </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
-          </Summary>
-        </Bottom>
-      </Wrapper>
-    </Container>
+    <>
+      <Container>
+        <Wrapper>
+          <Title>YOUR BAG</Title>
+          <Top>
+            <TopButton to="/products">CONTINUE SHOPPING</TopButton>
+            <TopTexts>
+              <TopText>Shopping Bag ({cart.quantity})</TopText>
+              <TopText>Your Wishlist (0)</TopText>
+            </TopTexts>
+            <TopButton type="filled" to="/" onClick={onCheckoutClick}>
+              CHECKOUT NOW
+            </TopButton>
+          </Top>
+          <Bottom>
+            <Info>
+              {cart.products.map((product) => (
+                <Product key={product.selectedId}>
+                  <ProductDetail>
+                    <Image src={product.img} />
+                    <Details>
+                      <ProductName>
+                        <strong>Product:</strong> {product.title}
+                      </ProductName>
+                      <ProductId>
+                        <strong>ID:</strong> {product.selectedId}
+                      </ProductId>
+                      <ProductSize>
+                        <strong>Size:</strong> {product.size}
+                      </ProductSize>
+                    </Details>
+                  </ProductDetail>
+                  <PriceDetail>
+                    <ProductAmountContainer>
+                      <Remove onClick={() => onMinusClick(product)} />
+                      <ProductAmount>{product.quantity}</ProductAmount>
+                      <Add onClick={() => onPlusClick(product)} />
+                    </ProductAmountContainer>
+                    <ProductPrice>
+                      $ {product.quantity * product.price}
+                    </ProductPrice>
+                  </PriceDetail>
+                  <RemoveButton
+                    onClick={() => onDeleteClick(product.selectedId)}>
+                    <Delete />
+                  </RemoveButton>
+                </Product>
+              ))}
+            </Info>
+            <Summary>
+              <SummaryTitle>ORDER SUMMARY</SummaryTitle>
+              <SummaryItem>
+                <SummaryItemText>Subtotal</SummaryItemText>
+                <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
+              </SummaryItem>
+              <SummaryItem>
+                <SummaryItemText>Estimated Shipping</SummaryItemText>
+                <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+              </SummaryItem>
+              <SummaryItem>
+                <SummaryItemText>Shipping Discount</SummaryItemText>
+                <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+              </SummaryItem>
+              <SummaryItem type="total">
+                <SummaryItemText>Total</SummaryItemText>
+                <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
+              </SummaryItem>
+              <Button onClick={onCheckoutClick}>CHECKOUT NOW</Button>
+            </Summary>
+          </Bottom>
+        </Wrapper>
+      </Container>
+      {open && <Modal setOpen={setOpen} />}
+    </>
   );
 };
 
