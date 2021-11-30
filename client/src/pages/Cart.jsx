@@ -48,13 +48,6 @@ const Cart = () => {
           <Title>YOUR BAG</Title>
           <Top>
             <TopButton to="/products">CONTINUE SHOPPING</TopButton>
-            <TopTexts>
-              <TopText>Shopping Bag ({cart.quantity})</TopText>
-              <TopText>Your Wishlist (0)</TopText>
-            </TopTexts>
-            <TopButton type="filled" to="/" onClick={onCheckoutClick}>
-              CHECKOUT NOW
-            </TopButton>
           </Top>
           <Bottom>
             <Info>
