@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { Add, Remove, Delete } from "@material-ui/icons";
 import { mobile } from "../styles/responsive";
 import ModalOrder from "../components/ModalOrder";
+import { CommonBtnColored } from "../styles/common";
 import { getCart, removeFromCart, updateQuantityCart } from "../redux/apiCalls";
 
 const Cart = () => {
@@ -131,36 +132,26 @@ const Title = styled.h1`
 `;
 
 const Top = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   padding: 20px;
+  text-align: right;
 `;
 
 const TopButton = styled(Link)`
   padding: 10px;
+  color: black;
   font-weight: 600;
-  cursor: pointer;
-  border: ${(props) => props.type === "filled" && "none"};
-  background-color: ${(props) =>
-    props.type === "filled" ? "black" : "transparent"};
-  color: ${(props) => props.type === "filled" && "white"};
-`;
-
-const TopTexts = styled.div`
-  ${mobile({ display: "none" })}
-`;
-
-const TopText = styled.span`
-  text-decoration: underline;
-  cursor: pointer;
-  margin: 0px 10px;
 `;
 
 const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
   ${mobile({ flexDirection: "column" })}
+`;
+
+const Notice = styled.div`
+  flex: 3;
+  font-size: 24px;
+  text-align: center;
 `;
 
 const Info = styled.div`
@@ -246,11 +237,8 @@ const SummaryItemText = styled.span``;
 
 const SummaryItemPrice = styled.span``;
 
-const Button = styled.button`
+const Button = styled(CommonBtnColored)`
   width: 100%;
-  padding: 10px;
-  background-color: black;
-  color: white;
   font-weight: 600;
 `;
 

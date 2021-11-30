@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { mobile } from "../styles/responsive";
+import { CommonBtnColored } from "../styles/common";
 
 const CategoryItem = ({ item }) => {
   return (
@@ -9,7 +10,9 @@ const CategoryItem = ({ item }) => {
         <Image src={item.img} />
         <Info>
           <Title>{item.title}</Title>
-          <Button>SHOP NOW</Button>
+          <CommonBtnColored fontSize="18px" color="black" bgcolor="white">
+            SHOP NOW
+          </CommonBtnColored>
         </Info>
       </StyledLink>
     </Container>
@@ -52,14 +55,6 @@ const Title = styled.strong`
   margin-bottom: 20px;
   color: white;
   font-size: 40px;
-`;
-
-const Button = styled.div`
-  padding: 10px;
-  border: none;
-  background-color: white;
-  color: gray;
-  cursor: pointer;
 `;
 
 export default CategoryItem;

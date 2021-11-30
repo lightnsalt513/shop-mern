@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { sliderItems } from "../data";
 import { mobile } from "../styles/responsive";
+import { CommonBtnOutlined } from "../styles/common";
 import "../styles/slick-custom.scss";
 
 const Carousel = () => {
@@ -27,7 +28,7 @@ const Carousel = () => {
               <InfoContainer>
                 <Title>{item.title}</Title>
                 <Desc>{item.desc}</Desc>
-                <Button>SHOW NOW</Button>
+                <CommonBtnOutlined>SHOW NOW</CommonBtnOutlined>
               </InfoContainer>
             </SlideInner>
           </Slide>
@@ -93,13 +94,6 @@ const Desc = styled.p`
   font-size: 20px;
   font-weight: 500px;
   letter-spacing: 3px;
-`;
-
-const Button = styled.button`
-  padding: 10px;
-  font-size: 20px;
-  background-color: transparent;
-  cursor: pointer;
 `;
 
 export default Carousel;

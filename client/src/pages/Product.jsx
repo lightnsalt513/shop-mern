@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import styled from "styled-components";
 import Newsletter from "../components/Newsletter";
+import { CommonBtnOutlined } from "../styles/common";
 import { mobile } from "../styles/responsive";
 import { useDispatch, useSelector } from "react-redux";
 import { getProduct, addToCart } from "../redux/apiCalls";
@@ -83,7 +84,12 @@ const Product = () => {
               <Amount>{quantity}</Amount>
               <Add onClick={() => handleQuantity("down")} />
             </AmountContainer>
-            <Button onClick={handleAddCart}>ADD TO CART</Button>
+            <CommonBtnOutlined
+              bdcolor="teal"
+              fontSize="16px"
+              onClick={handleAddCart}>
+              ADD TO CART
+            </CommonBtnOutlined>
           </AddContainer>
         </InfoContainer>
       </Wrapper>
@@ -178,17 +184,6 @@ const Amount = styled.span`
   align-items: center;
   justify-content: center;
   margin: 0px 5px;
-`;
-
-const Button = styled.button`
-  padding: 15px;
-  border: 2px solid teal;
-  background-color: white;
-  cursor: pointer;
-  font-weight: 500;
-  &:hover {
-    background-color: #f8f4f4;
-  }
 `;
 
 export default Product;
