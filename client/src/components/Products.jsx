@@ -18,9 +18,10 @@ const Products = ({ cat, filters, sort }) => {
       setFilteredProducts(
         products.filter((item) =>
           Object.entries(filters).every(([key, value]) => {
-            const filterMatch = item[key + "s"].find(
-              (obj) => obj.name === value
-            );
+            const filterMatch =
+              value === null
+                ? true
+                : item[key + "s"].find((obj) => obj.name === value);
             return filterMatch !== undefined;
           })
         )
