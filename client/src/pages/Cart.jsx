@@ -11,6 +11,9 @@ import { getCart, removeFromCart, updateQuantityCart } from "../redux/apiCalls";
 const Cart = () => {
   const user = useSelector((state) => state.user.currentUser);
   const cart = useSelector((state) => state.cart);
+  const [shippingAmount, setShippingAmount] = useState(0);
+  const [discountAmount, setDiscountAmount] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
 
@@ -19,6 +22,22 @@ const Cart = () => {
       getCart(dispatch);
     }
   }, [user]);
+
+  useEffect(() => {
+    let shipAmount = 0;
+    let discAmount = 0;
+
+    if (cart.products.length >= 1) {
+      shipAmount = cart.discount.amount;
+      if (cart.total > cart.discount.minTotal) {
+        discAmount = cart.discount.amount * -1;
+      }
+    }
+
+    setShippingAmount(shipAmount.toFixed(2));
+    setDiscountAmount(discAmount.toFixed(2));
+    setTotalAmount((cart.total + shipAmount + discAmount).toFixed(2));
+  }, [cart]);
 
   const onMinusClick = (product) => {
     if (product.quantity !== 1) {
@@ -51,6 +70,7 @@ const Cart = () => {
           </Top>
           <Bottom>
             <Info>
+              {cart.products.length < 1 && <Notice>Shopping cart empty</Notice>}
               {cart.products.map((product) => (
                 <Product key={product.selectedId}>
                   <ProductDetail>
@@ -92,22 +112,22 @@ const Cart = () => {
               </SummaryItem>
               <SummaryItem>
                 <SummaryItemText>Estimated Shipping</SummaryItemText>
-                <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+                <SummaryItemPrice>$ {shippingAmount}</SummaryItemPrice>
               </SummaryItem>
               <SummaryItem>
                 <SummaryItemText>Shipping Discount</SummaryItemText>
-                <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+                <SummaryItemPrice> $ {discountAmount} </SummaryItemPrice>
               </SummaryItem>
               <SummaryItem type="total">
                 <SummaryItemText>Total</SummaryItemText>
-                <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
+                <SummaryItemPrice>$ {totalAmount}</SummaryItemPrice>
               </SummaryItem>
               <Button onClick={onCheckoutClick}>CHECKOUT NOW</Button>
             </Summary>
           </Bottom>
         </Wrapper>
       </Container>
-      {open && <ModalOrder setOpen={setOpen} />}
+      {open && <ModalOrder setOpen={setOpen} finalAmount={totalAmount} />}
     </>
   );
 };

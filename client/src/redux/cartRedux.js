@@ -3,7 +3,11 @@ import { createSlice } from '@reduxjs/toolkit';
 const initState = {
   products: [],
   quantity: 0,
-  total: 0
+  total: 0,
+  discount: { // 하드코딩된 값
+    minTotal: 50,
+    amount: 5.9
+  }
 }
 
 const cartSlice = createSlice({

@@ -6,7 +6,7 @@ import Modal from "./Modal";
 import { addOrder } from "../redux/apiCalls";
 import { useDispatch } from "react-redux";
 
-const ModalOrder = ({ setOpen }) => {
+const ModalOrder = ({ setOpen, finalAmount }) => {
   const [address, setAddress] = useState("South Korea, Seoul Test Address 111");
   const cart = useSelector((state) => state.cart);
   const userId = useSelector((state) => state.user.currentUser._id);
@@ -21,7 +21,8 @@ const ModalOrder = ({ setOpen }) => {
   };
 
   const onOrderClick = async () => {
-    await addOrder(dispatch, userId, cart, address);
+    const cartObj = { ...cart, total: finalAmount };
+    await addOrder(dispatch, userId, cartObj, address);
     setOpen(false);
   };
 
