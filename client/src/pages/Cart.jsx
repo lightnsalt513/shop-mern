@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Add, Remove, Delete } from "@material-ui/icons";
 import { mobile } from "../styles/responsive";
-import Modal from "../components/Modal";
+import ModalOrder from "../components/ModalOrder";
 import { getCart, removeFromCart, updateQuantityCart } from "../redux/apiCalls";
 
 const Cart = () => {
@@ -36,6 +36,7 @@ const Cart = () => {
   };
 
   const onCheckoutClick = () => {
+    if (cart.products.length < 1) return;
     setOpen(true);
   };
 
@@ -112,7 +113,7 @@ const Cart = () => {
           </Bottom>
         </Wrapper>
       </Container>
-      {open && <Modal setOpen={setOpen} />}
+      {open && <ModalOrder setOpen={setOpen} />}
     </>
   );
 };

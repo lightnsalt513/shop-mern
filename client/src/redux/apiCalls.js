@@ -159,3 +159,37 @@ export const removeFromCart = async (dispatch, productId) => {
     console.log(err);
   }
 };
+
+export const emptyCart = async (dispatch) => {
+  try {
+    await userRequest.delete(`/cart`);
+    dispatch(clearProducts());
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+// Order
+export const addOrder = async (dispatch, userId, cart, address) => {
+  let order = {};
+  
+  order.userId = userId;
+  order.amount = cart.total;
+  order.address = address;
+
+  order.products = cart.products.map((item) => {
+    return {
+      productId: item.selectedId,
+      quantity: item.quantity,
+      mainProductId: item._id
+    }
+  });
+
+  try {
+    await userRequest.post('/orders', order);
+    alert('Order was successful');
+    emptyCart(dispatch);
+  } catch (err) {
+    console.log(err);
+  }
+};

@@ -2,18 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { createPortal } from "react-dom";
 
-const Modal = ({ setOpen }) => {
+const Modal = ({ setOpen, children }) => {
   return createPortal(
     <ModalWrap>
       <ModalInner onClick={() => setOpen(false)}>
-        <Layer onClick={(e) => e.stopPropagation()}>
-          <form>
-            <Title>Make Order</Title>
-            <Desc>Description</Desc>
-            <AddressInp placeholder="Address" />
-            <OrderBtn>Order</OrderBtn>
-          </form>
-        </Layer>
+        <Layer onClick={(e) => e.stopPropagation()}>{children}</Layer>
       </ModalInner>
     </ModalWrap>,
     document.getElementById("modal-root")
@@ -42,6 +35,7 @@ const ModalInner = styled.div`
 `;
 
 const Layer = styled.div`
+  position: relative;
   min-height: 100px;
   min-width: 400px;
   max-width: 100%;
@@ -49,9 +43,5 @@ const Layer = styled.div`
   border-radius: 8px;
   background: white;
 `;
-const Title = styled.h2``;
-const Desc = styled.p``;
-const AddressInp = styled.input``;
-const OrderBtn = styled.button``;
 
 export default Modal;
