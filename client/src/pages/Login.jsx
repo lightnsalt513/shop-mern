@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { login } from "../redux/apiCalls";
 import { mobile } from "../styles/responsive";
 import { Link } from "react-router-dom";

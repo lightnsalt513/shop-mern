@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import Product from "./Product";
 import { getProducts } from "../redux/apiCalls";
 

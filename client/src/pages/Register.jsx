@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { mobile } from "../styles/responsive";
 import { register } from "../redux/apiCalls";
 import { useHistory } from "react-router";

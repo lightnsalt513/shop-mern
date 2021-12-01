@@ -6,7 +6,7 @@ import {
   Phone,
   MailOutline,
 } from "@material-ui/icons";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { mobile } from "../styles/responsive";
 
 const Footer = () => {

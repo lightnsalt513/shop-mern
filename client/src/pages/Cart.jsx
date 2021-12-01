@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { Add, Remove, Delete } from "@material-ui/icons";
 import { mobile } from "../styles/responsive";
 import ModalOrder from "../components/ModalOrder";

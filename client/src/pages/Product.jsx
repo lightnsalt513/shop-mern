@@ -1,7 +1,7 @@
 import { Add, Remove } from "@material-ui/icons";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import Newsletter from "../components/Newsletter";
 import { CommonBtnOutlined } from "../styles/common";
 import { mobile } from "../styles/responsive";

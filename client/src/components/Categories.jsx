@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { categories } from "../data";
 import { mobile } from "../styles/responsive";
 import CategoryItem from "./CategoryItem";

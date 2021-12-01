@@ -2,7 +2,7 @@ import { SearchOutlined, ShoppingCartOutlined } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { addToCart } from "../redux/apiCalls";
 
 const Product = ({ item }) => {

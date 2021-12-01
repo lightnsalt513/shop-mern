@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { createPortal } from "react-dom";
 
 const Modal = ({ setOpen, children }) => {
