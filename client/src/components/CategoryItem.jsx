@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components/macro";
-import { mobile } from "../styles/responsive";
+import { mobile, tablet } from "../styles/responsive";
 import { CommonBtnColored } from "../styles/common";
 
 const CategoryItem = ({ item }) => {
@@ -22,13 +22,22 @@ const CategoryItem = ({ item }) => {
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
+  flex: 1;
   position: relative;
   height: 70vh;
-  margin: 3px;
-  ${mobile({ height: "30vh" })};
+  margin-left: 6px;
+  ${tablet({ height: "50vh" })}
+  ${mobile({ height: "30vh", maxHeight: "30vh", margin: "20px 0 0 0" })}
+
+  &:first-child {
+    margin-left: 0;
+    ${mobile({ marginTop: 0 })}
+  }
 `;
 
 const StyledLink = styled(Link)`
+  display: block;
+  width: 100%;
   height: 100%;
 `;
 
@@ -55,6 +64,7 @@ const Title = styled.strong`
   margin-bottom: 20px;
   color: white;
   font-size: 40px;
+  ${tablet({ fontSize: "28px" })}
 `;
 
 export default CategoryItem;

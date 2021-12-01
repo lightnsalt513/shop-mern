@@ -3,6 +3,7 @@ import styled from "styled-components/macro";
 import { mobile } from "../styles/responsive";
 import { register } from "../redux/apiCalls";
 import { useHistory } from "react-router";
+import { CommonBtnColored } from "../styles/common";
 
 const messages = {
   success: "Register was successful. Please continue with login.",
@@ -222,18 +223,10 @@ const Agreement = styled.span`
   font-size: 12px;
 `;
 
-const Button = styled.button`
+const Button = styled(CommonBtnColored)`
+  font-size: 16px;
   width: 40%;
-  border: none;
-  padding: 15px 20px;
-  background-color: teal;
-  color: white;
-  cursor: pointer;
-
-  &:disabled {
-    background: gray;
-    cursor: default;
-  }
+  min-width: 150px;
 `;
 
 const Error = styled.div`

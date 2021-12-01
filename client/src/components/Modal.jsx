@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components/macro";
 import { createPortal } from "react-dom";
+import { mobile } from "../styles/responsive";
 
 const Modal = ({ setOpen, children }) => {
   return createPortal(
@@ -40,8 +41,10 @@ const Layer = styled.div`
   min-width: 400px;
   max-width: 100%;
   padding: 20px;
+  margin: 0 20px;
   border-radius: 8px;
   background: white;
+  ${mobile({ width: "100%", minWidth: 0, maxWidth: "400px" })}
 `;
 
 export default Modal;

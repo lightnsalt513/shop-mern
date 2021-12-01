@@ -5,6 +5,7 @@ import { login } from "../redux/apiCalls";
 import { mobile } from "../styles/responsive";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { CommonBtnColored } from "../styles/common";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -33,7 +34,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
-          <Button onClick={onLoginClick} disabled={isFetching}>
+          <Button onClick={onLoginClick} disabled={isFetching} fontSize="16px">
             LOGIN
           </Button>
           {error && <Error>Something went wrong</Error>}
@@ -83,18 +84,10 @@ const Input = styled.input`
   padding: 10px;
 `;
 
-const Button = styled.button`
+const Button = styled(CommonBtnColored)`
+  font-size: 16px;
   width: 40%;
-  border: none;
-  padding: 15px 20px;
-  margin-bottom: 10px;
-  background-color: teal;
-  color: white;
-  cursor: pointer;
-  &:disabled {
-    color: green;
-    cursor: not-allowed;
-  }
+  min-width: 150px;
 `;
 
 const Error = styled.p`
@@ -102,10 +95,9 @@ const Error = styled.p`
 `;
 
 const StyledLink = styled(Link)`
-  margin: 5px 0px;
+  margin: 30px 0px 0;
+  color: black;
   font-size: 12px;
-  text-decoration: underline;
-  cursor: pointer;
 `;
 
 export default Login;

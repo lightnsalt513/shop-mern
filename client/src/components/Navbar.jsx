@@ -20,15 +20,15 @@ const Navbar = () => {
     <Container>
       <Wrapper>
         <Left>
-          <SearchContainer>
+          {/* <SearchContainer>
             <Input placeholder="Search" />
             <Search style={{ color: "gray", fontSize: 16 }} />
-          </SearchContainer>
+          </SearchContainer> */}
         </Left>
         <Center>
-          <Link to="/">
+          <LogoLink to="/">
             <Logo>LLLA.</Logo>
-          </Link>
+          </LogoLink>
         </Center>
         <Right>
           {user ? (
@@ -38,10 +38,10 @@ const Navbar = () => {
           ) : (
             <>
               <MenuItem>
-                <Link to="/register">Register</Link>
+                <StyledLink to="/register">Register</StyledLink>
               </MenuItem>
               <MenuItem>
-                <Link to="/login">Sign In</Link>
+                <StyledLink to="/login">Sign In</StyledLink>
               </MenuItem>
             </>
           )}
@@ -68,7 +68,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  ${mobile({ padding: "10px 0" })};
+  ${mobile({ padding: "10px 10px" })};
 `;
 
 const Left = styled.div`
@@ -77,21 +77,26 @@ const Left = styled.div`
   flex: 1;
 `;
 
-const SearchContainer = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 5px;
-  border: 1px solid lightgray;
-`;
+// const SearchContainer = styled.div`
+//   display: flex;
+//   align-items: center;
+//   padding: 5px;
+//   border: 1px solid lightgray;
+// `;
 
-const Input = styled.input`
-  border: none;
-  ${mobile({ width: "50px" })};
-`;
+// const Input = styled.input`
+//   border: none;
+//   ${mobile({ width: "50px" })};
+// `;
 
 const Center = styled.div`
   flex: 1;
   text-align: center;
+`;
+
+const LogoLink = styled(Link)`
+  color: black;
+  text-decoration: none;
 `;
 
 const Logo = styled.h1`
@@ -104,7 +109,7 @@ const Right = styled.div`
   flex: 1;
   align-items: center;
   justify-content: flex-end;
-  ${mobile({ flex: 2, justifyContent: "center" })};
+  ${mobile({ paddingRight: "5px" })}
 `;
 
 const MenuItem = styled.div`
@@ -119,6 +124,13 @@ const LogoutBtn = styled.button`
   border: none;
   background: none;
   cursor: pointer;
+  text-transform: uppercase;
+`;
+
+const StyledLink = styled(Link)`
+  border: none;
+  color: black;
+  text-decoration: none;
   text-transform: uppercase;
 `;
 

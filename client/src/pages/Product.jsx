@@ -103,24 +103,23 @@ const Container = styled.div``;
 const Wrapper = styled.div`
   padding: 50px;
   display: flex;
-  ${mobile({ padding: "10px", flexDirection: "column" })}
+  ${mobile({ padding: "20px 20px 80px", flexDirection: "column" })}
 `;
 
 const ImgContainer = styled.div`
   flex: 1;
+  min-width: 350px;
 `;
 
 const Image = styled.img`
   width: 100%;
-  height: 90vh;
-  object-fit: cover;
-  ${mobile({ height: "40vh" })}
+  object-fit: contain;
 `;
 
 const InfoContainer = styled.div`
   flex: 1;
-  padding: 0px 50px;
-  ${mobile({ padding: "10px" })}
+  padding: 0 0 0 30px;
+  ${mobile({ padding: "20px 0 0" })}
 `;
 
 const Title = styled.h1`
@@ -161,16 +160,15 @@ const FilterSize = styled(CommonSelect)`
 const FilterSizeOption = styled.option``;
 
 const AddContainer = styled.div`
-  width: 50%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   ${mobile({ width: "100%" })}
 `;
 
 const AmountContainer = styled.div`
   display: flex;
   align-items: center;
+  margin-right: 40px;
   font-weight: 700;
 `;
 

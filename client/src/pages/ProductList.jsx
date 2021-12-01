@@ -1,14 +1,13 @@
 import { useState } from "react";
+import { useLocation } from "react-router";
 import styled from "styled-components/macro";
 import Products from "../components/Products";
 import Newsletter from "../components/Newsletter";
 import { CommonSelect } from "../styles/common";
 import { mobile } from "../styles/responsive";
-import { useHistory, useLocation } from "react-router";
 
 const ProductList = () => {
   const location = useLocation();
-  const history = useHistory();
   const cat = location.pathname.split("/")[2];
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState("newest");

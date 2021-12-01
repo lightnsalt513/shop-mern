@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/macro";
 import { Add, Remove, Delete } from "@material-ui/icons";
-import { mobile } from "../styles/responsive";
+import { mobile, tablet } from "../styles/responsive";
 import ModalOrder from "../components/ModalOrder";
 import { CommonBtnColored } from "../styles/common";
 import { getCart, removeFromCart, updateQuantityCart } from "../redux/apiCalls";
@@ -76,22 +76,26 @@ const Cart = () => {
                   <ProductDetail>
                     <Image src={product.img} />
                     <Details>
-                      <ProductName>
+                      <DetailItem>
                         <strong>Product:</strong> {product.title}
-                      </ProductName>
-                      <ProductId>
+                      </DetailItem>
+                      <DetailItem>
                         <strong>ID:</strong> {product.selectedId}
-                      </ProductId>
-                      <ProductSize>
+                      </DetailItem>
+                      <DetailItem>
                         <strong>Size:</strong> {product.size}
-                      </ProductSize>
+                      </DetailItem>
                     </Details>
                   </ProductDetail>
                   <PriceDetail>
                     <ProductAmountContainer>
-                      <Remove onClick={() => onMinusClick(product)} />
+                      <QuantityBtn onClick={() => onMinusClick(product)}>
+                        <Remove />
+                      </QuantityBtn>
                       <ProductAmount>{product.quantity}</ProductAmount>
-                      <Add onClick={() => onPlusClick(product)} />
+                      <QuantityBtn onClick={() => onPlusClick(product)}>
+                        <Add />
+                      </QuantityBtn>
                     </ProductAmountContainer>
                     <ProductPrice>
                       $ {product.quantity * product.price}
@@ -136,7 +140,6 @@ const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 20px;
-  ${mobile({ padding: "10px" })}
 `;
 
 const Title = styled.h1`
@@ -150,7 +153,6 @@ const Top = styled.div`
 `;
 
 const TopButton = styled(Link)`
-  padding: 10px;
   color: black;
   font-weight: 600;
 `;
@@ -175,86 +177,119 @@ const Product = styled.div`
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #eee;
-  ${mobile({ flexDirection: "column" })}
+  ${mobile({ flexDirection: "column", marginTop: "20px" })}
+
+  &:first-child {
+    margin-top: 0;
+  }
 `;
 
 const ProductDetail = styled.div`
-  flex: 2;
   display: flex;
+  flex: 3;
 `;
 
 const Image = styled.img`
-  width: 200px;
+  align-self: center;
+  width: 25%;
 `;
 
 const Details = styled.div`
-  padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
+  padding: 20px;
 `;
 
-const ProductName = styled.span``;
+const DetailItem = styled.span`
+  margin-top: 20px;
+  ${tablet({ marginTop: "5px" })}
 
-const ProductId = styled.span``;
-
-const ProductSize = styled.span``;
+  &:first-child {
+    margin-top: 0;
+  }
+`;
 
 const PriceDetail = styled.div`
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  flex: 1;
+  ${mobile({
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    marginBottom: "20px",
+  })}
 `;
 
 const ProductAmountContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
 `;
 
 const ProductAmount = styled.div`
-  font-size: 24px;
   margin: 5px;
-  ${mobile({ margin: "5px 15px" })}
+  font-size: 24px;
+  ${tablet({ fontSize: "20px" })}
 `;
 
 const ProductPrice = styled.div`
+  margin-top: 20px;
   font-size: 30px;
   font-weight: 200;
-  ${mobile({ marginBottom: "20px" })}
+  ${tablet({ marginTop: "10px", fontSize: "24px" })}
+  ${mobile({ margin: "0 0 0 40px" })}
 `;
 
 const Summary = styled.div`
   flex: 1;
+  height: 50vh;
+  padding: 20px;
+  margin-left: 30px;
   border: 0.5px solid lightgray;
   border-radius: 10px;
-  padding: 20px;
-  height: 50vh;
+  ${mobile({ margin: "40px 0 0" })}
 `;
 
 const SummaryTitle = styled.h1`
   font-weight: 200;
 `;
 
-const SummaryItem = styled.div`
-  margin: 30px 0px;
-  display: flex;
-  justify-content: space-between;
-  font-weight: ${(props) => props.type === "total" && "500"};
-  font-size: ${(props) => props.type === "total" && "24px"};
+const SummaryItemText = styled.span`
+  flex: 1;
 `;
 
-const SummaryItemText = styled.span``;
+const SummaryItemPrice = styled.span`
+  flex: 1;
+  text-align: right;
+`;
 
-const SummaryItemPrice = styled.span``;
+const SummaryItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 0px;
+  font-weight: ${(props) => props.type === "total" && "500"};
+  font-size: ${(props) => props.type === "total" && "24px"};
+
+  ${SummaryItemPrice} {
+    flex: ${(props) => props.type === "total" && "auto"};
+  }
+`;
 
 const Button = styled(CommonBtnColored)`
   width: 100%;
   font-weight: 600;
 `;
 
-const RemoveButton = styled.button``;
+const QuantityBtn = styled.button`
+  border: none;
+  background: none;
+  cursor: pointer;
+`;
+
+const RemoveButton = styled.button`
+  cursor: pointer;
+`;
 
 export default Cart;

@@ -22,18 +22,22 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 60vh;
+  height: 450px;
   background-color: #fcf5f5;
+  ${mobile({ height: "350px" })};
 `;
 const Title = styled.h2`
   margin-bottom: 20px;
   font-size: 70px;
+  ${mobile({ fontSize: "50px" })};
 `;
 const Desc = styled.p`
+  padding: 0 20px;
   margin-bottom: 20px;
   font-size: 24px;
   font-weight: 300;
   text-align: center;
+  ${mobile({ fontSize: "20px" })};
 `;
 const InputContainer = styled.div`
   display: flex;

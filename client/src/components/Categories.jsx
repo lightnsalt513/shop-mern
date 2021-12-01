@@ -7,7 +7,7 @@ const Categories = () => {
   return (
     <Container>
       {categories.map((item) => (
-        <CategoryItem key={item.id} item={item} />
+        <CategoryItemStyled key={item.id} item={item} />
       ))}
     </Container>
   );
@@ -15,9 +15,14 @@ const Categories = () => {
 
 const Container = styled.div`
   display: flex;
-  padding: 20px;
+  padding: 0 20px;
+  margin: 20px 0;
   justify-content: space-between;
-  ${mobile({ flexDirection: "column", padding: "0px" })};
+  ${mobile({ flexDirection: "column" })};
+`;
+
+const CategoryItemStyled = styled(CategoryItem)`
+  flex: 1;
 `;
 
 export default Categories;

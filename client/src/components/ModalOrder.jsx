@@ -5,6 +5,7 @@ import { Close } from "@material-ui/icons";
 import Modal from "./Modal";
 import { addOrder } from "../redux/apiCalls";
 import { useDispatch } from "react-redux";
+import { CommonBtnColored } from "../styles/common";
 
 const ModalOrder = ({ setOpen, finalAmount }) => {
   const [address, setAddress] = useState("South Korea, Seoul Test Address 111");
@@ -60,19 +61,11 @@ const AddressInp = styled.input`
   box-sizing: border-box;
 `;
 
-const OrderBtn = styled.button`
+const OrderBtn = styled(CommonBtnColored)`
+  margin-top: 30px;
   width: 40%;
-  border: none;
-  padding: 15px 20px;
-  margin-top: 20px;
-  background-color: teal;
-  color: white;
-  cursor: pointer;
-
-  &:disabled {
-    background: gray;
-    cursor: default;
-  }
+  min-width: 150px;
+  font-size: 16px;
 `;
 
 const CloseBtn = styled.button`

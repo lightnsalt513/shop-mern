@@ -1,9 +1,9 @@
-import { SearchOutlined, ShoppingCartOutlined } from "@material-ui/icons";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components/macro";
+import { SearchOutlined, ShoppingCartOutlined } from "@material-ui/icons";
 import { addToCart } from "../redux/apiCalls";
+import { mobile } from "../styles/responsive";
 
 const Product = ({ item }) => {
   const dispatch = useDispatch();
@@ -60,6 +60,7 @@ const Container = styled.div`
   height: 350px;
   margin: 5px;
   background-color: #f5fbfd;
+  ${mobile({ minWidth: "200px", height: "250px", margin: "10px" })}
 
   &:hover ${Info} {
     opacity: 1;
@@ -72,6 +73,7 @@ const Circle = styled.div`
   height: 200px;
   border-radius: 50%;
   background-color: white;
+  ${mobile({ width: "140px", height: "140px" })}
 `;
 
 const Image = styled.img`

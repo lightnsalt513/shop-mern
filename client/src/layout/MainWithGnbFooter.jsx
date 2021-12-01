@@ -6,13 +6,18 @@ import styled from "styled-components/macro";
 
 const MainWithGnbFooter = ({ children }) => {
   return (
-    <div>
+    <Container>
       <Navbar />
       <Announcement />
       {children}
       <Footer />
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  max-width: 1500px;
+  margin: 0 auto;
+`;
 
 export default MainWithGnbFooter;

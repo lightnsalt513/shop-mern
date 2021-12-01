@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components/macro";
 import Product from "./Product";
 import { getProducts } from "../redux/apiCalls";
+import { mobile } from "../styles/responsive";
 
 const Products = ({ cat, filters, sort }) => {
   const [products, setProducts] = useState([]);
@@ -48,19 +49,29 @@ const Products = ({ cat, filters, sort }) => {
 
   return (
     <Container>
-      {filters
-        ? filteredProducts.map((item) => <Product key={item._id} item={item} />)
-        : products
-            .slice(0, 7)
-            .map((item) => <Product key={item._id} item={item} />)}
+      <Inner>
+        {filters
+          ? filteredProducts.map((item) => (
+              <Product key={item._id} item={item} />
+            ))
+          : products
+              .slice(0, 7)
+              .map((item) => <Product key={item._id} item={item} />)}
+      </Inner>
     </Container>
   );
 };
 
 const Container = styled.div`
+  padding: 0 20px;
+  margin: 20px 0;
+`;
+
+const Inner = styled.div`
   display: flex;
   flex-wrap: wrap;
-  padding: 20px;
+  margin: -5px;
+  ${mobile({ margin: "-10px" })}
 `;
 
 export default Products;
