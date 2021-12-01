@@ -23,6 +23,8 @@ const userSlice = createSlice({
     },
     logoutSuccess: (state) => {
       state.currentUser = initState.currentUser;
+      state.isFectching = initState.isFectching;
+      state.error = initState.error;
     }
   }
 });
