@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components/macro";
 
-// common buttons
+// buttons
 const btnStyle = css`
   padding: 10px;
   background-color: transparent;
@@ -35,4 +35,7 @@ export const CommonBtnOutlined = styled.button`
   }
 `;
 
-
+// select
+export const CommonSelect = styled.select`
+  padding: 8px;
+`;

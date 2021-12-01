@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import styled from "styled-components/macro";
 import Newsletter from "../components/Newsletter";
-import { CommonBtnOutlined } from "../styles/common";
+import { CommonBtnOutlined, CommonSelect } from "../styles/common";
 import { mobile } from "../styles/responsive";
 import { useDispatch, useSelector } from "react-redux";
 import { getProduct, addToCart } from "../redux/apiCalls";
@@ -154,9 +154,8 @@ const FilterTitle = styled.span`
   font-weight: 200;
 `;
 
-const FilterSize = styled.select`
+const FilterSize = styled(CommonSelect)`
   margin-left: 10px;
-  padding: 5px;
 `;
 
 const FilterSizeOption = styled.option``;

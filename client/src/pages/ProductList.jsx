@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components/macro";
 import Products from "../components/Products";
 import Newsletter from "../components/Newsletter";
+import { CommonSelect } from "../styles/common";
 import { mobile } from "../styles/responsive";
 import { useHistory, useLocation } from "react-router";
 
@@ -82,8 +83,7 @@ const FilterText = styled.span`
   ${mobile({ marginRight: "0px" })}
 `;
 
-const Select = styled.select`
-  padding: 10px;
+const Select = styled(CommonSelect)`
   margin-right: 20px;
   ${mobile({ margin: "10px 0px" })}
 `;
