@@ -81,57 +81,46 @@ const Register = () => {
         return { ...prev, [type]: messages[propName] };
       });
     } else {
+      let newMessage = "";
+
       switch (type) {
         case "email":
           const emailValid = /\S+@\S+\.\S+/.test(registerInfoRef.current[type]);
           if (!emailValid) {
-            return setErrorMessage((prev) => {
-              return { ...prev, [type]: messages.wrongEmail };
-            });
+            newMessage = messages.wrongEmail;
           }
-          break;
+          return setErrorMessage((prev) => {
+            return { ...prev, email: newMessage };
+          });
         case "password":
           if (
             registerInfoRef.current.confirmPassword !== "" &&
             registerInfoRef.current.password !==
               registerInfoRef.current.confirmPassword
           ) {
-            return setErrorMessage((prev) => {
-              return {
-                ...prev,
-                confirmPassword: messages.passwordNoMatch,
-                password: "",
-              };
-            });
-          } else {
-            return setErrorMessage((prev) => {
-              return {
-                ...prev,
-                confirmPassword: "",
-                password: "",
-              };
-            });
+            newMessage = messages.passwordNoMatch;
           }
+          return setErrorMessage((prev) => {
+            return {
+              ...prev,
+              confirmPassword: newMessage,
+              password: "",
+            };
+          });
         case "confirmPassword":
           if (
             registerInfoRef.current.password !== "" &&
             registerInfoRef.current.password !==
               registerInfoRef.current.confirmPassword
           ) {
-            return setErrorMessage((prev) => {
-              return {
-                ...prev,
-                confirmPassword: messages.passwordNoMatch,
-              };
-            });
-          } else {
-            return setErrorMessage((prev) => {
-              return {
-                ...prev,
-                confirmPassword: "",
-              };
-            });
+            newMessage = messages.passwordNoMatch;
           }
+          return setErrorMessage((prev) => {
+            return {
+              ...prev,
+              confirmPassword: newMessage,
+            };
+          });
         default:
           return setErrorMessage((prev) => {
             return { ...prev, [type]: "" };
@@ -167,22 +156,22 @@ const Register = () => {
       alert(messages.success);
       history.push("/login");
     } catch (err) {
+      let newMessage = "";
+
       switch (err) {
         case "email":
-          setErrorMessage((prev) => {
-            return { ...prev, submit: messages.duplicateEmail };
-          });
+          newMessage = messages.duplicateEmail;
           break;
         case "username":
-          setErrorMessage((prev) => {
-            return { ...prev, submit: messages.duplicateUsername };
-          });
+          newMessage = messages.duplicateUsername;
           break;
         default:
-          setErrorMessage((prev) => {
-            return { ...prev, submit: err };
-          });
+          break;
       }
+
+      setErrorMessage((prev) => {
+        return { ...prev, submit: newMessage };
+      });
     }
   };
 
