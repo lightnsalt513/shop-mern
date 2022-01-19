@@ -89,12 +89,17 @@ export const addToCart = async (dispatch, cart, product) => {
   let products = [];
 
   try {
-    // cart 상태에 따라 생성 또는 업데이트
     if (cart.products.length < 1) {
       products.push(productObj);
-      await userRequest.post('/cart', {
-        products: products
-      });
+      if (cart.products) {
+        await userRequest.put('/cart/update', {
+          products: products
+        });
+      } else {
+        await userRequest.post('/cart', {
+          products: products
+        });
+      }
       dispatch(addProduct(product));
     } else {
       let hasSameProduct = false;

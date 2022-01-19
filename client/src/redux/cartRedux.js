@@ -58,7 +58,7 @@ const cartSlice = createSlice({
         }
         return false;
       });
-      if (idx === 'undefined') return;
+      if (idx === undefined) return;
       state.products.splice(idx, 1);
       state.quantity--;
       state.total -= productPrice;
