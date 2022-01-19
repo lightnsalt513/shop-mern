@@ -1,8 +1,8 @@
 import styled from "styled-components/macro";
 import { Badge } from "@material-ui/core";
-import { Search, ShoppingCartOutlined } from "@material-ui/icons";
+import { ShoppingCartOutlined } from "@material-ui/icons";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { mobile } from "../styles/responsive";
 import { logout } from "../redux/apiCalls";
@@ -11,9 +11,11 @@ const Navbar = () => {
   const quantity = useSelector((state) => state.cart.quantity);
   const user = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const onLogoutClick = () => {
     logout(dispatch);
+    history.push("/");
   };
 
   return (
