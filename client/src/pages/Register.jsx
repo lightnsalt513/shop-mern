@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import styled from "styled-components/macro";
 import { mobile } from "../styles/responsive";
 import { register } from "../redux/apiCalls";
@@ -24,45 +24,79 @@ const Register = () => {
     password: "",
     confirmPassword: "",
   });
-  const [errorMessage, setErrorMessage] = useState({
+  const registerInfoRef = useRef({
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
+  const [errorMessage, setErrorMessage] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    submit: "",
+  });
   const [readyForSubmit, setReadyForSubmit] = useState(false);
   const history = useHistory();
 
-  // input focusout 발생 시점에 빈 input 여부 확인
-  // 이 방식은 registerInfo가 변경될 때 마다 event handler를 죽였다 다시 적용함으로 퍼포먼스에 좋지 않을것 같음
   useEffect(() => {
-    const focusOutFunc = (e) => {
-      if (e.target.tagName !== "INPUT") return;
-      const type = e.target.name;
+    document.addEventListener("focusout", focusOutFunc);
+    return () => {
+      document.removeEventListener("focusout", focusOutFunc);
+    };
+  }, []);
 
-      if (registerInfo[type] === "") {
-        const propName = "no" + type.charAt(0).toUpperCase() + type.slice(1);
-        setErrorMessage((prev) => {
-          return { ...prev, [type]: messages[propName] };
-        });
-      } else {
-        if (type === "email") {
-          const emailValid = /\S+@\S+\.\S+/.test(registerInfo[type]);
+  useEffect(() => {
+    // Check if submit ready
+    let isReady = true;
+    for (let key in errorMessage) {
+      if (errorMessage.hasOwnProperty(key)) {
+        if (errorMessage[key] !== "") {
+          isReady = false;
+          break;
+        }
+      }
+    }
+
+    for (let key in registerInfo) {
+      if (errorMessage.hasOwnProperty(key)) {
+        if (registerInfo[key] === "") {
+          isReady = false;
+          break;
+        }
+      }
+    }
+
+    setReadyForSubmit(isReady);
+  }, [registerInfo, errorMessage]);
+
+  const focusOutFunc = (e) => {
+    if (e.target.tagName !== "INPUT") return;
+    const type = e.target.name;
+
+    if (registerInfoRef.current[type] === "") {
+      const propName = "no" + type.charAt(0).toUpperCase() + type.slice(1);
+      setErrorMessage((prev) => {
+        return { ...prev, [type]: messages[propName] };
+      });
+    } else {
+      switch (type) {
+        case "email":
+          const emailValid = /\S+@\S+\.\S+/.test(registerInfoRef.current[type]);
           if (!emailValid) {
-            setErrorMessage((prev) => {
+            return setErrorMessage((prev) => {
               return { ...prev, [type]: messages.wrongEmail };
             });
-          } else {
-            setErrorMessage((prev) => {
-              return { ...prev, [type]: "" };
-            });
           }
-        } else if (type === "confirmPassword" || type === "password") {
+          break;
+        case "password":
           if (
-            registerInfo.password !== "" &&
-            registerInfo.password !== registerInfo.confirmPassword
+            registerInfoRef.current.confirmPassword !== "" &&
+            registerInfoRef.current.password !==
+              registerInfoRef.current.confirmPassword
           ) {
-            setErrorMessage((prev) => {
+            return setErrorMessage((prev) => {
               return {
                 ...prev,
                 confirmPassword: messages.passwordNoMatch,
@@ -70,50 +104,64 @@ const Register = () => {
               };
             });
           } else {
-            setErrorMessage((prev) => {
-              return { ...prev, confirmPassword: "", password: "" };
+            return setErrorMessage((prev) => {
+              return {
+                ...prev,
+                confirmPassword: "",
+                password: "",
+              };
             });
           }
-        } else {
-          setErrorMessage((prev) => {
+        case "confirmPassword":
+          if (
+            registerInfoRef.current.password !== "" &&
+            registerInfoRef.current.password !==
+              registerInfoRef.current.confirmPassword
+          ) {
+            return setErrorMessage((prev) => {
+              return {
+                ...prev,
+                confirmPassword: messages.passwordNoMatch,
+              };
+            });
+          } else {
+            return setErrorMessage((prev) => {
+              return {
+                ...prev,
+                confirmPassword: "",
+              };
+            });
+          }
+        default:
+          return setErrorMessage((prev) => {
             return { ...prev, [type]: "" };
           });
-        }
-      }
-    };
-    document.addEventListener("focusout", focusOutFunc);
-    return () => {
-      document.removeEventListener("focusout", focusOutFunc);
-    };
-  }, [registerInfo]);
-
-  useEffect(() => {
-    // Check if submit ready
-    let isReady = true;
-    for (let key in errorMessage) {
-      if (errorMessage[key] !== "") isReady = false;
-    }
-
-    if (isReady) {
-      for (let key in registerInfo) {
-        if (registerInfo[key] === "") isReady = false;
       }
     }
-    setReadyForSubmit(isReady);
-  }, [registerInfo, errorMessage]);
+  };
 
   const handleChange = (e) => {
+    if (errorMessage.submit !== "") {
+      setErrorMessage((prev) => {
+        return { ...prev, submit: "" };
+      });
+    }
     setRegisterInfo((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
+    registerInfoRef.current[e.target.name] = e.target.value;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (errorMessage !== "") return;
+    for (let key in errorMessage) {
+      if (errorMessage.hasOwnProperty(key)) {
+        if (errorMessage[key] !== "") return;
+      }
+    }
+
     const newUserInfo = { ...registerInfo };
     delete newUserInfo.confirmPassword;
-    console.log(newUserInfo);
     try {
       await register(newUserInfo);
       alert(messages.success);
@@ -121,13 +169,19 @@ const Register = () => {
     } catch (err) {
       switch (err) {
         case "email":
-          setErrorMessage(messages.duplicateEmail);
+          setErrorMessage((prev) => {
+            return { ...prev, submit: messages.duplicateEmail };
+          });
           break;
         case "username":
-          setErrorMessage(messages.duplicateUsername);
+          setErrorMessage((prev) => {
+            return { ...prev, submit: messages.duplicateUsername };
+          });
           break;
         default:
-          console.log(err);
+          setErrorMessage((prev) => {
+            return { ...prev, submit: err };
+          });
       }
     }
   };
@@ -174,6 +228,7 @@ const Register = () => {
             data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
           <Button disabled={!readyForSubmit}>CREATE</Button>
+          {errorMessage.submit && <Error>{errorMessage.submit}</Error>}
         </Form>
       </Wrapper>
     </Container>
@@ -230,6 +285,7 @@ const Button = styled(CommonBtnColored)`
 `;
 
 const Error = styled.div`
+  width: 100%;
   margin-top: 20px;
   color: red;
   font-size: 12px;
