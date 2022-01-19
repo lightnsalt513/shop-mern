@@ -21,12 +21,7 @@ const Navbar = () => {
   return (
     <Container>
       <Wrapper>
-        <Left>
-          {/* <SearchContainer>
-            <Input placeholder="Search" />
-            <Search style={{ color: "gray", fontSize: 16 }} />
-          </SearchContainer> */}
-        </Left>
+        <Left></Left>
         <Center>
           <LogoLink to="/">
             <Logo>LLLA.</Logo>
@@ -78,18 +73,6 @@ const Left = styled.div`
   align-items: center;
   flex: 1;
 `;
-
-// const SearchContainer = styled.div`
-//   display: flex;
-//   align-items: center;
-//   padding: 5px;
-//   border: 1px solid lightgray;
-// `;
-
-// const Input = styled.input`
-//   border: none;
-//   ${mobile({ width: "50px" })};
-// `;
 
 const Center = styled.div`
   flex: 1;

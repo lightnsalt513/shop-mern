@@ -48,7 +48,6 @@ const Register = () => {
   }, []);
 
   useEffect(() => {
-    // Check if submit ready
     let isReady = true;
     for (let key in errorMessage) {
       if (errorMessage.hasOwnProperty(key)) {

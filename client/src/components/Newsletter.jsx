@@ -26,11 +26,13 @@ const Container = styled.div`
   background-color: #fcf5f5;
   ${mobile({ height: "350px" })};
 `;
+
 const Title = styled.h2`
   margin-bottom: 20px;
   font-size: 70px;
   ${mobile({ fontSize: "50px" })};
 `;
+
 const Desc = styled.p`
   padding: 0 20px;
   margin-bottom: 20px;
@@ -39,6 +41,7 @@ const Desc = styled.p`
   text-align: center;
   ${mobile({ fontSize: "20px" })};
 `;
+
 const InputContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -48,11 +51,13 @@ const InputContainer = styled.div`
   background-color: white;
   ${mobile({ width: "80%" })};
 `;
+
 const Input = styled.input`
   flex: 8;
   padding-left: 20px;
   border: none;
 `;
+
 const Button = styled.button`
   flex: 1;
   border: none;
