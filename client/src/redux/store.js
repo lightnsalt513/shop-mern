@@ -1,4 +1,4 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import {
   persistStore,
   persistReducer,
@@ -13,22 +13,18 @@ import storage from 'redux-persist/lib/storage';
 import cartReducer from './cartRedux';
 import userReducer from './userRedux';
 
-const persistConfig = {
-  key: 'root',
+const userPersistConfig = {
+  key: 'user',
   version: 1,
   storage,
+  whitelist: ['currentUser']
 }
 
-const persistedReducer = persistReducer(persistConfig, userReducer);
-// const rootReducers = combineReducers({
-//   user: userReducer,
-//   cart: cartReducer
-// });
-// const persistedReducers = persistReducer(persistConfig, rootReducers);
+const userPersistedReducer = persistReducer(userPersistConfig, userReducer);
 
 export const store = configureStore({
   reducer: {
-    user: persistedReducer,
+    user: userPersistedReducer,
     cart: cartReducer
   },
   middleware: (getDefaultMiddleware) =>
