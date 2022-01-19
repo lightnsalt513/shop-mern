@@ -20,6 +20,7 @@ const CategoryItem = ({ item }) => {
 };
 
 const Container = styled.div`
+  overflow: hidden;
   display: flex;
   flex-wrap: wrap;
   flex: 1;
