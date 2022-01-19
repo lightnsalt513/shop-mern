@@ -48,11 +48,11 @@ const Navbar = () => {
             </>
           )}
           <MenuItem>
-            <Link to="/cart">
+            <StyledLink to="/cart">
               <Badge badgeContent={quantity} color="primary">
                 <ShoppingCartOutlined />
               </Badge>
-            </Link>
+            </StyledLink>
           </MenuItem>
         </Right>
       </Wrapper>

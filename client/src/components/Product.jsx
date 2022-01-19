@@ -93,6 +93,9 @@ const Icon = styled.button`
   background-color: white;
   cursor: pointer;
   transition: all 0.2s ease;
+  a {
+    color: inherit;
+  }
 
   &:hover {
     background-color: #e9f5f5;

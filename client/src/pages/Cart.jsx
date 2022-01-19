@@ -139,7 +139,7 @@ const Cart = () => {
 const Container = styled.div``;
 
 const Wrapper = styled.div`
-  padding: 20px;
+  padding: 20px 0 60px;
 `;
 
 const Title = styled.h1`
