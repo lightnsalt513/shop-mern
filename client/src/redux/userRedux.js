@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initState = {
   currentUser: null,
   isFectching: false,
-  error: false
+  error: false,
+  errorMessage: ''
 }
 
 const userSlice = createSlice({
@@ -17,14 +18,16 @@ const userSlice = createSlice({
       state.isFectching = false;
       state.currentUser = action.payload;
     },
-    loginFail: (state) => {
+    loginFail: (state, action) => {
       state.isFectching = false;
       state.error = true;
+      state.errorMessage = action.payload
     },
     logoutSuccess: (state) => {
       state.currentUser = initState.currentUser;
       state.isFectching = initState.isFectching;
       state.error = initState.error;
+      state.errorMessage = initState.errorMessage;
     }
   }
 });

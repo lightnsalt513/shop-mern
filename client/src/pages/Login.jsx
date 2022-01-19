@@ -11,7 +11,9 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const { isFetching, error } = useSelector((state) => state.user);
+  const { isFetching, error, errorMessage } = useSelector(
+    (state) => state.user
+  );
 
   const onLoginClick = (e) => {
     e.preventDefault();
@@ -37,7 +39,7 @@ const Login = () => {
           <Button onClick={onLoginClick} disabled={isFetching} fontSize="16px">
             LOGIN
           </Button>
-          {error && <Error>Something went wrong</Error>}
+          {error && <Error>{errorMessage}</Error>}
           <StyledLink to="/register">CREATE A NEW ACCOUNT</StyledLink>
         </Form>
       </Wrapper>
