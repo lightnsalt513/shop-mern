@@ -37,8 +37,8 @@ export const getProducts = (cat) => {
     try {
       const res = await publicRequest.get(
         cat
-          ? `http://localhost:5000/api/products?category=${cat}`
-          : "http://localhost:5000/api/products"
+          ? `/products?category=${cat}`
+          : "/products"
       );
       resolve(res.data);
     } catch (err) {
@@ -91,15 +91,14 @@ export const addToCart = async (dispatch, cart, product) => {
   try {
     if (cart.products.length < 1) {
       products.push(productObj);
-      if (cart.products) {
-        await userRequest.put('/cart/update', {
-          products: products
-        });
-      } else {
+      const res = await userRequest.put('/cart/update', {
+        products: products
+      });
+      if (res.data === null) {
         await userRequest.post('/cart', {
           products: products
         });
-      }
+      };
       dispatch(addProduct(product));
     } else {
       let hasSameProduct = false;
