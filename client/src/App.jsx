@@ -24,7 +24,9 @@ const App = () => {
 
   useEffect(() => {
     if (user) {
-      getCart(dispatch);
+      setTimeout(() => {
+        getCart(dispatch);
+      }, 0);
     }
   }, [user]);
 
