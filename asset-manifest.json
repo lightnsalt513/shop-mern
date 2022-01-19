@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.js": "/shop-mern/static/js/main.e1e0bc61.chunk.js",
+    "main.js.map": "/shop-mern/static/js/main.e1e0bc61.chunk.js.map",
+    "runtime-main.js": "/shop-mern/static/js/runtime-main.2eb16c4e.js",
+    "runtime-main.js.map": "/shop-mern/static/js/runtime-main.2eb16c4e.js.map",
+    "static/css/2.32730fc0.chunk.css": "/shop-mern/static/css/2.32730fc0.chunk.css",
+    "static/js/2.357077cb.chunk.js": "/shop-mern/static/js/2.357077cb.chunk.js",
+    "static/js/2.357077cb.chunk.js.map": "/shop-mern/static/js/2.357077cb.chunk.js.map",
+    "index.html": "/shop-mern/index.html",
+    "static/css/2.32730fc0.chunk.css.map": "/shop-mern/static/css/2.32730fc0.chunk.css.map",
+    "static/js/2.357077cb.chunk.js.LICENSE.txt": "/shop-mern/static/js/2.357077cb.chunk.js.LICENSE.txt",
+    "static/media/slick-theme.css": "/shop-mern/static/media/slick.c94f7671.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.2eb16c4e.js",
+    "static/css/2.32730fc0.chunk.css",
+    "static/js/2.357077cb.chunk.js",
+    "static/js/main.e1e0bc61.chunk.js"
+  ]
+}
