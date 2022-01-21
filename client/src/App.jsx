@@ -6,7 +6,6 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-
 import { getCart } from "./redux/apiCalls";
 import ScrollToTop from "./helpers/ScrollToTop";
 
@@ -17,6 +16,7 @@ import Product from "./pages/Product";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Cart from "./pages/Cart";
+import NotFoundPage from "./pages/404";
 
 const App = () => {
   const user = useSelector((state) => state.user.currentUser);
@@ -44,7 +44,7 @@ const App = () => {
             <ProductList />
           </MainWithGnbFooter>
         </Route>
-        <Route path="/product/:id">
+        <Route exact path="/product/:id">
           <MainWithGnbFooter>
             <Product />
           </MainWithGnbFooter>
@@ -58,6 +58,7 @@ const App = () => {
         <Route path="/register">
           {user ? <Redirect to="/" /> : <Register />}
         </Route>
+        <Route path="*" component={NotFoundPage} />
       </Switch>
     </Router>
   );
