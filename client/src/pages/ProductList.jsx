@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation } from "react-router";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components/macro";
 import Products from "../components/Products";
 import Newsletter from "../components/Newsletter";
@@ -30,7 +30,12 @@ const ProductList = () => {
 
   return (
     <Container>
-      <Title>{cat}</Title>
+      <Title>{cat && (
+        <>
+          {cat}
+          <Link to="/products">Show all products</Link>
+        </>
+      )}</Title>
       <FilterContainer>
         <Filter>
           <FilterText>Filter Products:</FilterText>
@@ -61,8 +66,16 @@ const ProductList = () => {
 const Container = styled.div``;
 
 const Title = styled.h1`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin: 20px;
   text-transform: capitalize;
+  a {
+    color: inherit;
+    font-size: 16px;
+    ${mobile({ fontSize: '14px' })}
+  }
 `;
 
 const FilterContainer = styled.div`
