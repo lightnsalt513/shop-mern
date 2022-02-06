@@ -11,7 +11,7 @@
 ## 1. Overview <a id="overview"></a>
 * [E-Commerce MERN 스택 앱 구현 강의](https://www.youtube.com/watch?v=y66RgYMAgSo&t=25s)를 통해 MongoDB, Express, React, Node.js 를 사용한 간단한 e-commerce 사이트를 만들어 보면서 DB부터 서버 그리고 프론트까지의 구현 과정을 경험  
   * 튜터리얼 내용 중 Payment 및 Dashboard 관련 구현은 작업에서 제외  
-> **Demo URL** : https://lightnsalt513.github.io/shop-mern/#/shop-mern/
+> **Demo URL** : https://lightnsalt513.github.io/shop-mern/#/
 * **습득 개념** :
   * Express.js를 통해 주요 API를 설계하여 client와 DB와의 통신 인터페이스 개발하는 과정 
   * Cryptojs를 활용한 사용자 패스워드 암호화 및 JWT와 redux-persist를 사용해 로그인 상태 유지
